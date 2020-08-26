@@ -1,0 +1,229 @@
+<?php
+/**
+*
+*
+* CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+* Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+*
+* Licensed under The MIT License
+* For full copyright and license information, please see the LICENSE.txt
+* Redistributions of files must retain the above copyright notice.
+*
+* @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+* @link          http://cakephp.org CakePHP(tm) Project
+* @package       app.View.Layouts
+* @since         CakePHP(tm) v 0.10.0.1076
+* @license       http://www.opensource.org/licenses/mit-license.php MIT License
+*/
+$dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <!--[if lt IE 9]><meta http-equiv="X-UA-Compatible" content="IE=edge"></script><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><?php echo $title_for_layout; ?></title>
+  <?php echo $this->fetch('meta'); ?>
+  <meta name="keywords" content="Mallento">
+  <meta name="description" content="Mallento">
+  <!-- css -->
+  <link href="/kimonon/css/common.css" rel="stylesheet">
+  <link href="/kimonon/css/main.css" rel="stylesheet">
+  <link href="/kimonon/css/bootstrap.css" rel="stylesheet">
+  <link href="/kimonon/css/slider-pro.css" rel="stylesheet">
+  <link href="/kimonon/css/magnific-popup.css" rel="stylesheet">
+  <link href="/kimonon/css/jquery-ui.css" rel="stylesheet">
+  <link href="/kimonon/css/style.css" rel="stylesheet">
+  <?php echo $this->fetch('css'); ?>
+  <?php echo $this->element('googl_tracking');?>
+  <script>
+    function onImgErr(elm) {
+      elm.src = "/img/front.png";
+    }
+  </script>
+  <script type="text/javascript" id="useragent-switcher">
+    navigator.__defineGetter__("userAgent", function() {return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/604.3.5 (KHTML, like Gecko) Version/11.0.1 Safari/604.3.5"})
+  </script>
+</head>
+
+<body cz-shortcut-listen="true">
+  <a id="top"></a>
+
+  <!-- ヘッダここから -->
+  <header>
+
+    <div class="header">
+      <div class="header_naka">
+        <div class="header_naka_inner">
+          <div class="top clearfix">
+
+
+            <div class="header_logo_box">
+              <p><a href="/"><img src="/kimonon/img/mallento_furimo_LP1.png" alt="マレント" class="header-logo" width="230"></a></p>
+            </div>
+            <ul class="header_menu pt10">
+
+            <?php if(!empty($loginname)): ?>
+              <li><a href="/mypage/logout" class="mybtn mybtn01">ログアウト</a></li>
+              <li><a href="/mypage" class="mybtn mybtn02">マイページ</a></li>
+            <?php else: ?>
+              <li><a href="/mypage/" class="mybtn mybtn01">ログイン</a></li>
+              <li><a href="/member_regist" class="mybtn mybtn02">新規登録</a></li>
+            <?php endif; ?>
+            </ul>
+
+            <div id="sp_menu_btn"> <span class="f12">MENU</span> </div>
+            <div class="sp_menu_box"></div>
+          </div>
+        </div>
+
+        <div class="header_naka_dash">
+          <div class="header_naka_inner_navi">
+            <div class="top clearfix">
+              <nav>
+                <ul id="menu" class="clearfix">
+                  <?php foreach ($dspCategories as $key => $val): ?>
+                  <li><a href="/item/category/<?= h($key) ?>"><?= h($key) ?></a></li>
+                  <?php endforeach; ?>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </header>
+  <!-- ヘッダここまで -->
+  <div class="sp_side_header">
+    <form class="mb10" action="/item/search/" enctype="text/plain" method="get">
+      <div class="search_box">
+        <input type="search" name="keyword" placeholder="検索する">
+        <button class="search_btn"><span class="search_mark"></span></button>
+      </div>
+    </form>
+    <div class="side_banner">
+      <ul class="sp_side_header_btn row" style="padding-left: 0px;">
+        <li class="col-xs-6 col-sm-6"><a href="/cart" class="side_cart_btn">カートを見る</a></li>
+        <li class="col-xs-6 col-sm-6"><a href="/mypage/item" class="side_exhibit_btn">商品を出品する</a></li>
+
+
+      </ul>
+      <!-- 20170729追加 start -->
+      <div class="hide_500">
+        <!-- 20170729追加 end -->
+        <p><a href="#"></a></p>
+        <!-- 20170729追加 start -->
+      </div>
+      <!-- 20170729追加 end -->
+    </div>
+  </div>
+
+  <!-- コンテンツここから -->
+  <div class="container">
+    <div id="g">
+      <!-- 20170730 mod -->
+      <div class="row">
+        <!-- コンテンツメイン -->
+        <div id="main" class="col-xs-12 col-sm-12 col-md-9 col-md-push-3 mt20 ">
+          <?php echo $this->fetch('content'); ?>
+        </div>
+
+        <!-- 左メニュー -->
+        <div id="side" class="col-xs-12 col-sm-12 col-md-3 col-md-pull-9 mt40">
+          <div class="side_header spnone">
+            <div class="side_banner">
+              <p><!--<a href="#"><img src="/img/cm_01.png" alt="フリマ" class="img-responsive"></a>--><a href="#"><img src="/kimonon/img/u6zqsZY.png" alt="左カラムバナー" class="img-responsive" width="250px"></a></p>
+              <p class="centered"><a href="/cart" class="side_cart_btn">カートを見る</a></p>
+              <p class="centered"><a href="/mypage/item" class="side_exhibit_btn">商品を出品する</a></p>
+            </div>
+            <form class="mb10" action="/item/search/" enctype="text/plain" method="get">
+              <div class="search_box">
+                <input type="search" name="keyword" placeholder="検索する">
+                <button class="search_btn"><span class="search_mark"></span></button>
+              </div>
+            </form>
+          </div>
+          <a href="/item/category/"><h3 class="f20 mover">カテゴリー</h3></a>
+          <div class="genre clearfix">
+            <ul class="box_l categories">
+              <?php foreach ($dspCategories as $key => $val): ?>
+              <li><a href="/item/category/<?= h($key) ?>"><?= h($key) ?></a></li>
+              <?php endforeach; ?>
+            </ul>
+            <div class="clear"></div>
+            <ul class="guide">
+              <li class="text-right"><a href="/item/category/">すべてのカテゴリー</a></li>
+            </ul>
+          </div>
+          <a href="/item/tag/"><h3 class="f20 mover">現在の人気キーワード</h3></a>
+          <?php if (!empty($arrTagList)) : ?>
+            <div class="genre clearfix popular_tags">
+              <ul class="box_l">
+              <?php for($i = 0; $i < count($arrTagList); $i++): ?>
+                <li><a href="/item/tag/<?php echo h($arrTagList[$i]) ?>"><?php echo h(mb_strimwidth($arrTagList[$i],0,14,'...')) ?></a></li>
+              <?php endfor; ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+
+          <h3 class="f20">ご利用案内</h3>
+          <ul class="guide clearfix">
+            <li><a href="/aboutus/guide/buy">購入者ガイド</a></li>
+            <li><a href="/aboutus/guide/sale">出品者ガイド</a></li>
+            <li><a href="/aboutus/faq">よくある質問</a></li>
+            <li><a href="/aboutus/whatnew">運営からお知らせ</a></li>
+          </ul>
+          <h3 class="f20">お問い合わせ</h3>
+          <ul class="guide">
+            <li><a href="/aboutus/law">特定商法取引に基づく表記</a></li>
+            <li><a href="/aboutus/privacy">個人情報保護について</a></li>
+            <li><a href="/aboutus/">運営会社</a></li>
+            <li><a href="/aboutus/contact">お問い合わせ</a></li>
+          </ul>
+        </div>
+        <!-- 左メニュー -->
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /g -->
+  </div>
+  <!-- コンテンツここまで -->
+
+  <!-- フッター-->
+  <footer>
+    <!-- フッタ -->
+    <div id="c">
+      <div class="c_naka pt10"> <small>Copyright &copy; 2018 Mallento All Rights Reserved.</small> </div>
+    </div>
+  </footer>
+
+  <!-- js -->
+  <script type="text/javascript" src="/kimonon/js/respond.js"></script>
+
+  <!-- PageTop -->
+  <script type="text/javascript" src="/kimonon/js/jquery_002.js"></script>
+  <script type="text/javascript" src="/kimonon/js/jquery-ui.js"></script>
+  <script type="text/javascript" src="/kimonon/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/kimonon/js/to-top.js"></script>
+  <script type="text/javascript" src="/kimonon/js/accordion_menu.js"></script>
+  <script type="text/javascript" src="/kimonon/js/jquery.js"></script>
+  <script type="text/javascript" src="/kimonon/js/lightbox.js"></script>
+  <?php echo $this->fetch('script'); ?>
+  <script type="text/javascript">
+    <?php echo $this->fetch('script_area'); ?>
+  </script>
+  <script type="text/javascript">
+    jQuery(document).ready(function($){
+      $('.auto_linker').each(function(){
+        $(this).html( $(this).html().replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1" target="_blank">$1</a> ') );
+      });
+    });
+  </script>
+  <?php echo $this->element('sql_dump');?>
+</body>
+</html>

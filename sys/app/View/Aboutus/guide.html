@@ -1,0 +1,14 @@
+<?php
+$this->set('title_for_layout',$META_TITLE);
+$this->Html->meta('keywords', $META_KEYWORDS, array('inline' => false));
+$this->Html->meta('description', $META_DESCRIPTION, array('inline' => false));
+
+$code_area = <<< EOF
+EOF;
+$this->assign('code_area', $code_area);
+?>
+
+<section>
+  <h2 class="f25 mb20"><?=$PAGE_TITLE?></h2>
+   <?php echo $HTML_GUIDE_CONTENT ?>
+</section>

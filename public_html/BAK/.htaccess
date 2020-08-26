@@ -1,0 +1,5 @@
+
+AuthUserFile "/home/oomaekunccb/mallento.com/htpasswd/furima-demo/.htpasswd"
+AuthName "Member Site"
+AuthType BASIC
+require valid-user
