@@ -82,7 +82,7 @@ class MemberRegistController extends FrontAppController {
             $viewVars = array(
                 'password' => $data['Member']['password'],
                 'mailAddress' => $data['Member']['email'],
-                'tmpLink' => 'http://'.Configure::read('info.domain').'/member_regist/authenticate?key=' . $data['Member']['tmp_key']
+                'tmpLink' => 'https://'.Configure::read('info.domain').'/member_regist/authenticate?key=' . $data['Member']['tmp_key']
             );
             $thankYouMail = Configure::read('mail.thankYou');
             $this->sendMail($thankYouMail, $data['Member']['email'], $viewVars);
@@ -137,7 +137,7 @@ class MemberRegistController extends FrontAppController {
                     $viewVars = array(
                         'mailAddress' => $saveResult['Member']['email'],
                         'password' => $saveResult['Member']['password_confirm'],
-                        'tmpLink' => 'http://'.Configure::read('info.domain').'/member_regist/authenticate?key=' . $tmpKey,
+                        'tmpLink' => 'https://'.Configure::read('info.domain').'/member_regist/authenticate?key=' . $tmpKey,
                     );
                     $reissuePasswordMail = Configure::read('mail.reissuePassword');
                     $this->sendMail($reissuePasswordMail, $saveResult['Member']['email'], $viewVars);

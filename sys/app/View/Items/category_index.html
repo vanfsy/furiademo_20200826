@@ -15,28 +15,43 @@ $this->assign('script_area', $code_area);
 ?>
 
 <?php if(!empty($arrDatas)): ?>
-<?php foreach($arrDatas as $category => $row): ?>
-  <section>
-    <h2 class="f25 mb20"><?= $category ?><span class="alignright mr05 f11 fw_normal"><a href="/item/category/<?= $category ?>"><?= $category ?>の全一覧</a></span></h2>
+<?php $Ccount=0; foreach($arrDatas as $category => $row): ++$Ccount; ?>
+  <section class="categoryC<?php echo $Ccount; ?>">
+    <h2 class="f25 mb20"><?= $category ?></h2>
 
     <?php if(isset($arrCategory[$category]) && is_array($arrCategory[$category])){ ?>
       <div class="cat_childs mb10">
         <?php foreach($arrCategory[$category] as $cat2=>$cat2_name){ ?>
-          <a style="color:#333;" href="/item/category/<?= urlencode($cat2); ?>"><?= trim(mb_convert_kana($cat2_name, 's', 'UTF-8')); ?></a>
+          <a style="color:#333;" href="/item/category/<?= urlencode($cat2); ?>">#<?= trim(mb_convert_kana($cat2_name, 's', 'UTF-8')); ?></a>
         <?php } ?>
       </div>
     <?php } ?>
     <div class="row item sp-listing">
       <?php if(!empty($row)): ?>
         <?php foreach($row as $rowItems): ?>
-          <div class="col-xs-4 col-sm-4 col-md-3">
+          <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
             <?= $this->element('item', ['row' => $rowItems]) ?>
           </div>
+		
+		
+		
         <?php endforeach; ?>
       <?php else: ?>
         <div class="ml15">該当する情報がありません。</div>
       <?php endif; ?>
     </div>
+	  <span class="alignright mr05 f11 fw_normal moreItem"><a href="/item/category/<?= $category ?>"><?= $category ?>の全一覧</a></span>
   </section>
 <?php endforeach; ?>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- コマース一覧ページ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5709399179121964"
+     data-ad-slot="2051925064"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 <?php endif; ?>

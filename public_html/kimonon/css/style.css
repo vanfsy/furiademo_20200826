@@ -42,14 +42,16 @@
 	float:left !important;
 }
 .spviewnum{
-	width:70px;
+	/*width:70px;*/
+	width:150px;
 	float:right !important;
 }
  ul.cate_menu{
-	 width:280px;
+	 /*width:280px;*/
+	 display: inline-block;
+	 text-align: center;
 	 height:20px;
-	 margin:auto;
-	 margin-top:55px;
+	 /*margin-top:55px;*/
  }
 .category ul.cate_menu li{
 	margin:4px;

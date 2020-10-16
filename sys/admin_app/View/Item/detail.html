@@ -7,7 +7,7 @@ $arrGender = Configure::write('arrGender');
 
 // メルマガ希望
 $arrMailMagFlg = Configure::write('arrMailMagFlg');
-
+$arrSelling = Configure::read('arrSelling');
 ?>
 
 <h1 class="page-header">商品情報</h1>
@@ -20,11 +20,21 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
       <td colspan="3"><p><?php echo nl2br(h($arrItem['id'])); ?></p></td>
   </tr>
     <tr>
-      <th>タイトル</th>
+      <th>状況</th>
+      <td colspan="3">
+          <?php if($arrItem['selling']== '1' && $arrItem['quantity'] <= 0): ?>
+          <p class="red">売切</p>
+          <?php else: ?>
+          <p <?php if(!$arrItem['selling']) echo 'class="red"' ?>><?php echo @$arrSelling[$arrItem['selling']] ?></p>
+          <?php endif; ?>
+      </td>
+    </tr>
+    <tr>
+      <th>商品名</th>
       <td colspan="3"><p><?php echo nl2br(h($arrItem['title'])); ?></p></td>
     </tr>
     <tr>
-      <th>メイン画像</th>
+      <th>画像1</th>
       <td colspan="3">
       <?php if(!empty($arrItem['main_image_file_name'])): ?>
         <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.main_image',array('style'=>'thumb')));?></p>
@@ -32,7 +42,7 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
       </td>
     </tr>
     <tr>
-      <th>サブ画像1</th>
+      <th>画像2</th>
       <td colspan="3">
       <?php if(!empty($arrItem['sub_image1_file_name'])): ?>
         <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image1',array('style'=>'thumb')));?></p>
@@ -40,7 +50,7 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
       </td>
     </tr>
     <tr>
-      <th>サブ画像2</th>
+      <th>画像3</th>
       <td colspan="3">
       <?php if(!empty($arrItem['sub_image2_file_name'])): ?>
         <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image2',array('style'=>'thumb')));?></p>
@@ -48,7 +58,7 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
       </td>
     </tr>
     <tr>
-      <th>サブ画像3</th>
+      <th>画像4</th>
       <td colspan="3">
       <?php if(!empty($arrItem['sub_image3_file_name'])): ?>
         <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image3',array('style'=>'thumb')));?></p>
@@ -56,7 +66,7 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
       </td>
     </tr>
     <tr>
-      <th>サブ画像4</th>
+      <th>画像5</th>
       <td colspan="3">
       <?php if(!empty($arrItem['sub_image4_file_name'])): ?>
         <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image4',array('style'=>'thumb')));?></p>
@@ -64,7 +74,7 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
       </td>
     </tr>
     <tr>
-      <th>ジャンル</th>
+      <th>カテゴリ</th>
       <td colspan="3"><p><?php echo nl2br(h($arrItem['category'])); ?></p></td>
     </tr>
     <tr>
@@ -86,6 +96,26 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
     <tr>
       <th>キーワードタグ</th>
       <td colspan="3"><p><?php echo h($arrItem['tag1']); ?> / <?php echo h($arrItem['tag2']); ?> / <?php echo h($arrItem['tag3']); ?> / <?php echo h($arrItem['tag4']); ?> / <?php echo h($arrItem['tag5']); ?></p></td>
+    </tr>
+    <tr>
+      <th>配送料の負担</th>
+      <td colspan="3"><p><?php echo nl2br(h($arrItem['shippingpayer'])); ?></p></td>
+    </tr>
+    <tr>
+      <th>送料について</th>
+      <td colspan="3"><p><?php echo nl2br(h($arrItem['aboutshippingcost'])); ?></p></td>
+    </tr>
+    <tr>
+      <th>配送の方法</th>
+      <td colspan="3"><p><?php echo str_replace("0", "", nl2br(h($arrItem['shippingmethod']))); ?></p></td>
+    </tr>
+    <tr>
+      <th>発送元の地域</th>
+      <td colspan="3"><p><?php echo nl2br(h($arrItem['shippingfromarea'])); ?></p></td>
+    </tr>
+    <tr>
+      <th>発送までの日数</th>
+      <td colspan="3"><p><?php echo nl2br(h($arrItem['shippingduration'])); ?></p></td>
     </tr>
     <tr>
       <th>登録更新日</th>

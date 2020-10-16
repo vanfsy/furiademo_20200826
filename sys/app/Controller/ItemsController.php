@@ -16,7 +16,7 @@ class ItemsController extends FrontAppController {
             $this->Session->write('sesDispNum',$this->disp_num);
         }
         if(empty($this->disp_num)){
-            $this->disp_num = 20;
+            $this->disp_num = 100;
         }
         $this->set('disp_num',$this->disp_num);
 
@@ -43,7 +43,7 @@ class ItemsController extends FrontAppController {
             $this->Session->write('sesDispNum',$disp_num);
         }
         if(empty($disp_num)){
-            $disp_num = 20;
+            $disp_num = 100;
         }
         $this->set('disp_num',$disp_num);
 
@@ -81,7 +81,7 @@ class ItemsController extends FrontAppController {
             $this->Session->write('sesDispNum',$disp_num);
         }
         if(empty($disp_num)){
-            $disp_num = 20;
+            $disp_num = 100;
         }
         $this->set('disp_num',$disp_num);
 
@@ -117,7 +117,7 @@ class ItemsController extends FrontAppController {
             $this->Session->write('sesDispNum',$disp_num);
         }
         if(empty($disp_num)){
-            $disp_num = 20;
+            $disp_num = 100;
         }
         $this->set('disp_num',$disp_num);
 
@@ -152,7 +152,7 @@ class ItemsController extends FrontAppController {
             $this->Session->write('sesDispNum',$disp_num);
         }
         if(empty($disp_num)){
-            $disp_num = 20;
+            $disp_num = 100;
         }
         $this->set('disp_num',$disp_num);
 

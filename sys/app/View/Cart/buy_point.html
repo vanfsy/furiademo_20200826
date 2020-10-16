@@ -32,37 +32,37 @@ $this->assign('script_area', $code_area);
     <tr class="bg_lightgray">
       <th class="width40">購入金額</th>
       <th class="width40">購入ポイント</th>
-      <th></th>
+      <th>選択</th>
     </tr>
     <tr>
-      <td>1,080</td>
+      <td>1,000円</td>
       <td>1000&nbsp;PT</td>
       <td><input type="radio" name="data[point]" value="1000"></td>
     </tr>
     <tr>
-      <td>2,160</td>
+      <td>2,000円</td>
       <td>2000&nbsp;PT</td>
       <td><input type="radio" name="data[point]" value="2000"></td>
     </tr>
     <tr>
-      <td>3,240</td>
+      <td>3,000円</td>
       <td>3000&nbsp;PT</td>
       <td><input type="radio" name="data[point]" value="3000"></td>
     </tr>
     <tr>
-      <td>5,400</td>
-      <td>5750&nbsp;PT&nbsp;<span class="red">（15％UP!!）</span></td>
-      <td><input type="radio" name="data[point]" value="5750"></td>
+      <td>5,000円</td>
+      <td>5000&nbsp;PT</td>
+      <td><input type="radio" name="data[point]" value="5000"></td>
     </tr>
     <tr>
-      <td>10,800</td>
-      <td>12000&nbsp;PT（20％UP!!）</td>
-      <td><input type="radio" name="data[point]" value="12000"></td>
+      <td>10,000円</td>
+      <td>10000&nbsp;PT</td>
+      <td><input type="radio" name="data[point]" value="10000"></td>
     </tr>
     <tr>
-      <td>32,400</td>
-      <td>37500&nbsp;PT（25％UP!!）</td>
-      <td><input type="radio" name="data[point]" value="37500"></td>
+      <td>30,000円</td>
+      <td>30000&nbsp;PT</td>
+      <td><input type="radio" name="data[point]" value="30000"></td>
     </tr>
     <?php /*foreach($point_list as $plan=>$dat){ ?>
     <tr>
@@ -80,7 +80,7 @@ $this->assign('script_area', $code_area);
   <table class="border-all-gray ml30 mb10 mt30 width90">
     <tr class="bg_lightgray">
       <th class="bg_lightgray pr10 pt05 pb05 textcenter border-all-gray width90">決済方法</th>
-      <th class="bg_lightgray pr10 pt05 pb05 textcenter border-all-gray width10"></th>
+      <th class="bg_lightgray pr10 pt05 pb05 textcenter border-all-gray width10">選択</th>
     </tr>
     <?php foreach($arrPaymentMethod as $value => $name): ?>
     <tr>
@@ -92,6 +92,8 @@ $this->assign('script_area', $code_area);
   <?php if(isset($arrError['payment_method']) && !empty($arrError['payment_method'])): ?>
   <p class="error-message ml30"><?php echo $arrError['payment_method'] ?></p>
   <?php endif; ?>
+
+<p class="ml30 mb30">※ポイントのクレジット決済は只今準備中です。もうしばらくお待ちください。</p>
 
   <p class="textcenter mt30">
     <input type="submit" value="ポイント購入する" class="mybtn-bl mybtn-bl-md">

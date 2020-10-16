@@ -485,7 +485,7 @@ class CartController extends FrontAppController {
         // ポイント購入完了メール送信
         $pointPurchaseComplete = Configure::read('mail.pointPurchaseComplete');
         $viewVars = array('purchasePoint' => $sesBuyPoint['point'], 'paymentAmount' => Configure::read('arrPointRateList')[$sesBuyPoint['point']]);
-        $this->sendMail($pointPurchaseComplete, $arrMember['Member']['email'], $viewVars);
+        $this->sendMail_bcc($pointPurchaseComplete, $arrMember['Member']['email'], $viewVars);
     }
 
     function bank_transfer() {
@@ -506,7 +506,7 @@ class CartController extends FrontAppController {
             // ポイント購入完了メール送信
             $pointPurchaseComplete = Configure::read('mail.pointPurchaseComplete');
             $viewVars = array('purchasePoint' => $sesBuyPoint['point'], 'paymentAmount' => Configure::read('arrPointRateList')[$sesBuyPoint['point']]);
-            $this->sendMail($pointPurchaseComplete, $arrMember['Member']['email'], $viewVars);
+            $this->sendMail_bcc($pointPurchaseComplete, $arrMember['Member']['email'], $viewVars);
         }
     }
 

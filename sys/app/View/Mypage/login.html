@@ -15,7 +15,8 @@ $this->Html->meta('description', $meta_description, array('inline' => false));
 <?= $this->Form->create('Member', array('url' => '/mypage/login/','class' => 'form-horizontal login')) ?>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">ユーザID<span class="red">*</span></label>
+    <!--<label class="col-sm-3 control-label">ユーザID<span class="red">*</span></label>-->
+	<label class="col-sm-3 control-label">メールアドレス<span class="red">*</span></label>
     <div class="col-sm-6">
         <?= $this->Form->input('user_id',array('label'=>false,'type' => 'text', 'class'=>'form-control','placeholder' => 'yourmail@mail.com')) ?>
     </div>

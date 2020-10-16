@@ -25,48 +25,26 @@ $sub_img2 = $this->Upload->uploadUrl($arrItem,'Item.sub_image2',array('style'=>'
 $sub_img3 = $this->Upload->uploadUrl($arrItem,'Item.sub_image3',array('style'=>'list_l'));
 $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'list_l'));
 
+
+$meta_title = 'RELEASEコマース｜'.$arrItem['title'];
+$this->set('title_for_layout',$meta_title);
+
+
+$meta_description = str_replace("\r\n", '', mb_strimwidth($arrItem['discription'], 0, 160, "…"));
+$this->Html->meta('description', $meta_description, array('inline' => false));
+
 ?>
 
-<section class="">
-  <h2 class="f25 mb30"><?= h($arrItem['title']) ?></h2>
-  <div class="download width100 clearfix ml30 spml_0">
-    <p class="detail_main_img">
+<section class="itempagebox">
+  <h2 class="f25 mb30 sp_side_header"><?= h($arrItem['title']) ?></h2>
+  <div class="download width100 clearfix spml_0">
+    <div class="detail_main_img" id="detail_main_img">
       <a class="pd_main_img" href="<?= $main_img ?>" title="<?= h($arrItem['title']) ?>"><img src="<?= $main_img ?>" alt="test1102e" onerror="onImgErr(this)"></a>
-    </p>
-    <div class="alignleft ml60">
-      <div class="above clearfix">
-        <p class="f25 price-product-page"><b><?= number_format($arrItem['price']) ?>円</b><span class="f15">（税込）</span></p>
-      </div>
-      <div class="under clearfix ml-30-sp">
-        <?php if($arrItem['selling'] == 1): ?>
-        <?php if($arrItem['quantity'] > 0): ?>
-        <a href="/cart/addItem/?item_id=<?= $arrItem['id'] ?>&quantity=1" class="alignleft mr10 button_style_cartIn">
-          <p class="alignleft mr10 button_style_cartIn">カートに入れる</p>
-        </a>
-        <?php else: ?>
-        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">売切</a>
-        <?php endif; ?>
-        <?php if($favorited): ?>
-        <a href="#" class="alignright">
-          <p class="alignright button_style_favorite">お気に入り追加済み</p>
-        </a>
-        <?php else: ?>
-        <a href="/item/favorite/<?= $arrItem['id'] ?>" class="alignright">
-          <p class="alignright button_style_favorite">お気に入り</p>
-        </a>
-        <?php endif; ?>
-        <?php elseif($arrItem['selling'] == 0): ?>
-        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">販売停止中</a>
-        <?php else: ?>
-        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">販売終了</a>
-        <?php endif; ?>
-      </div>
-    </div>
-  </div>
-
-  <div class="row item clearfix mt50 row-eq-height" id="pd_sub_img">
+		
+		
+<div class="item clearfix mt20 row-eq-height" id="pd_sub_img">
     <?php if(!empty($arrItem['sub_image1_file_name'])): ?>
-    <div class="col-xs-6 col-sm-6 col-md-3">
+    <div class="col-xs-6 col-sm-6 col-md-3 itemImage">
       <dl class="">
         <dt>
           <a href="<?= $sub_img1 ?>" class="pd_sub_img" title="<?= h($arrItem['title']) ?>">
@@ -79,7 +57,7 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
     </div>
     <?php endif; ?>
     <?php if(!empty($arrItem['sub_image2_file_name'])): ?>
-    <div class="col-xs-6 col-sm-6 col-md-3">
+    <div class="col-xs-6 col-sm-6 col-md-3 itemImage">
       <dl class="">
         <dt>
           <a href="<?= $sub_img2 ?>" class="pd_sub_img" title="<?= h($arrItem['title']) ?>">
@@ -92,7 +70,7 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
     </div>
     <?php endif; ?>
     <?php if(!empty($arrItem['sub_image3_file_name'])): ?>
-    <div class="col-xs-6 col-sm-6 col-md-3">
+    <div class="col-xs-6 col-sm-6 col-md-3 itemImage">
       <dl class="">
         <dt>
           <a href="<?= $sub_img3 ?>" class="pd_sub_img" title="<?= h($arrItem['title']) ?>">
@@ -105,7 +83,7 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
     </div>
     <?php endif; ?>
     <?php if(!empty($arrItem['sub_image4_file_name'])): ?>
-    <div class="col-xs-6 col-sm-6 col-md-3">
+    <div class="col-xs-6 col-sm-6 col-md-3 itemImage">
       <dl class="">
         <dt>
           <a href="<?= $sub_img4 ?>" class="pd_sub_img" title="<?= h($arrItem['title']) ?>">
@@ -118,8 +96,55 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
     </div>
     <?php endif; ?>
   </div>
+		
+		
+    </div>
+	 <!--pd_sub_img-->
 
-  <p class="pl20 pr20 mt20 mb30 auto_linker"><?= nl2br(h($arrItem['discription'])) ?></p>
+	  
+	  
+	  
+	  <p class="pl20 pr20 mt20 mb30 auto_linker sp_side_header"><?= nl2br(h($arrItem['discription'])) ?></p>
+	  
+    <!--<div class="alignleft ml60">-->
+	  <div class=" itemright">
+		<div class="itemtext sp_display_none">
+		<h2 class="f25 mb30 itemtitlename"><?= h($arrItem['title']) ?></h2>
+		<p class=" mt20 mb30 auto_linker"><?= nl2br(h($arrItem['discription'])) ?></p>
+		</div>
+      <div class="above clearfix">
+        <p class="f25 price-product-page"><b><?= number_format($arrItem['price']) ?>円</b></p>
+      </div>
+      <div class="under clearfix sp_display_none"><!-- ml-30-sp-->
+        <?php if($arrItem['selling'] == 1): ?>
+        <?php if($arrItem['quantity'] > 0): ?>
+        <a href="/cart/addItem/?item_id=<?= $arrItem['id'] ?>&quantity=1" class="alignleft mr10 button_style_cartIn mb20">
+          <p class="alignleft mr10 button_style_cartIn">カートに入れる</p>
+        </a>
+        <?php else: ?>
+        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">売り切れ</a>
+        <?php endif; ?>
+        <?php if($favorited): ?>
+        <a href="#" class="button_style_favorite">
+          お気に入り追加済み
+        </a>
+        <?php else: ?>
+        <a href="/item/favorite/<?= $arrItem['id'] ?>" class="button_style_favorite">
+          お気に入り
+        </a>
+        <?php endif; ?>
+        <?php elseif($arrItem['selling'] == 0): ?>
+        <a class="alignleft mr10 button_style_favorite mb20" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">販売準備中</a>
+        <?php else: ?>
+        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">販売終了</a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+<!--pd_sub_img跡-->
+  
+
+  
 
   <table class="detail">
     <tbody>
@@ -131,11 +156,98 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
         <th>登録日</th>
         <td><?= date('Y年m月d日',strtotime($arrItem['created'])) ?></td>
       </tr>
+      <tr>
+        <th>カテゴリー</th>
+        <td><a href="https://shop.release.sc/item/category/<?= nl2br(h($arrItem['category'])) ?>"><?= nl2br(h($arrItem['category'])) ?></a></td>
+      </tr>
+      <tr>
+        <th>配送料の負担</th>
+        <td><?= nl2br(h($arrItem['shippingpayer'])) ?></td>
+      </tr>
+      <?php
+      if($arrItem['aboutshippingcost']==""){
+      }else{
+      ?>
+      <tr>
+        <th>送料について</th>
+        <td><?= nl2br(h($arrItem['aboutshippingcost'])) ?></td>
+      </tr>
+      <?php
+      }
+      ?>
+      <tr>
+        <th>配送方法</th>
+        <td><?= str_replace("0", "", nl2br(h($arrItem['shippingmethod']))) ?></td>
+      </tr>
+      <tr>
+        <th>発送元の地域</th>
+        <td><?= nl2br(h($arrItem['shippingfromarea'])) ?></td>
+      </tr>
+      <tr>
+        <th>発送までの日数</th>
+        <td><?= nl2br(h($arrItem['shippingduration'])) ?></td>
+      </tr>
+      <!--
+      <tr>
+        <th>追加7</th>
+        <td></td>
+      </tr>
+      <tr>
+        <th>追加8</th>
+        <td></td>
+      </tr>
+      <tr>
+        <th>追加9</th>
+        <td></td>
+      </tr>
+      <tr>
+        <th>追加10</th>
+        <td></td>
+      </tr>
+      -->
     </tbody>
   </table>
 
-  <h3 class="mb30 mt50">
-    商品を買った人のレビュー / 総合評価 (
+	
+	
+    <!--<div class="alignleft ml60">-->
+	  <div class=" itemright">
+<br>
+<br>
+
+
+      <div class="under clearfix sp_side_header"><!-- ml-30-sp-->
+        <?php if($arrItem['selling'] == 1): ?>
+        <?php if($arrItem['quantity'] > 0): ?>
+        <a href="/cart/addItem/?item_id=<?= $arrItem['id'] ?>&quantity=1" class="alignleft mr10 button_style_cartIn mb20">
+          <p class="alignleft mr10 button_style_cartIn">カートに入れる</p>
+        </a>
+        <?php else: ?>
+        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">売り切れ</a>
+        <?php endif; ?>
+        <?php if($favorited): ?>
+        <a href="#" class="button_style_favorite">
+          お気に入り追加済み
+        </a>
+        <?php else: ?>
+        <a href="/item/favorite/<?= $arrItem['id'] ?>" class="button_style_favorite">
+          お気に入り
+        </a>
+        <?php endif; ?>
+        <?php elseif($arrItem['selling'] == 0): ?>
+        <a class="alignleft mr10 button_style_favorite mb20" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">販売準備中</a>
+        <?php else: ?>
+        <a class="alignleft mr10 button_style_favorite" style="top:0;opacity:1;color:#ff4d74;border-color:#ff4d74;">販売終了</a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+<!--pd_sub_img跡-->
+
+<br clear="all">
+
+  <h3 class="mb30 mt50 reviewbox">
+    <!--商品を-->買った人のレビュー / 総合評価 (
     <?php if(isset($ratingAve)) : ?>
     <?= h($ratingAve) ?> / 5
     <?php else : ?>
@@ -146,13 +258,25 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
   <?php if(!empty($arrReview)): ?>
   <table class="table mb30 review">
     <tbody>
+		
+<?php if($isMobile): ?>
+    <?php foreach($arrReview as $row): ?>
+		
+		<p><?= h($row['Member']['nickname']) ?>
+		<br><?= h($row['Review']['comment']) ?>
+		<br><?= h(Configure::read('rating')[$row['Review']['rating']]) ?></p>
+		
+      <?php endforeach; ?>
+<?php else: ?>
       <?php foreach($arrReview as $row): ?>
       <tr class="row">
-        <td><?= h($row['Member']['name']) ?></td>
+        <td><?= h($row['Member']['nickname']) ?></td>
         <td><?= h($row['Review']['comment']) ?></td>
         <td><?= h(Configure::read('rating')[$row['Review']['rating']]) ?></td>
       </tr>
       <?php endforeach; ?>
+<?php endif; ?>
+		
     </tbody>
   </table>
   <?php endif; ?>
@@ -224,7 +348,7 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
     </a>
     <p class="item-p01 centered">
       <a href="/mypage/sellerinfo/<?= h($arrMember['id']) ?>">
-        <?= h($arrMember['company']) ?> <?= h($arrMember['nickname']) ?>
+        <!--<?= h($arrMember['company']) ?> --><?= h($arrMember['nickname']) ?>
       </a>
     </p>
   </div>
@@ -240,58 +364,83 @@ $sub_img4 = $this->Upload->uploadUrl($arrItem,'Item.sub_image4',array('style'=>'
 </div>
 </dl>
 <h2 class="f25 mb20 mt50">商品キーワード</h2>
-<div class="detail_tag_list width100 mt30 clearfix">
+<div class="detail_tag_list width100 mt30 clearfix Itemtag cat_childs">
   <?php if(!empty($arrItem['tag1'])): ?>
-  <a href="/item/tag/<?= h($arrItem['tag1']) ?>"><?= h($arrItem['tag1']) ?></a>
+  <a href="/item/tag/<?= h($arrItem['tag1']) ?>">#<?= h($arrItem['tag1']) ?></a>
   <?php endif; ?>
   <?php if(!empty($arrItem['tag2'])): ?>
-  <a href="/item/tag/<?= h($arrItem['tag2']) ?>"><?= h($arrItem['tag2']) ?></a>
+  <a href="/item/tag/<?= h($arrItem['tag2']) ?>">#<?= h($arrItem['tag2']) ?></a>
   <?php endif; ?>
   <?php if(!empty($arrItem['tag3'])): ?>
-  <a href="/item/tag/<?= h($arrItem['tag3']) ?>"><?= h($arrItem['tag3']) ?></a>
+  <a href="/item/tag/<?= h($arrItem['tag3']) ?>">#<?= h($arrItem['tag3']) ?></a>
   <?php endif; ?>
   <?php if(!empty($arrItem['tag4'])): ?>
-  <a href="/item/tag/<?= h($arrItem['tag4']) ?>"><?= h($arrItem['tag4']) ?></a>
+  <a href="/item/tag/<?= h($arrItem['tag4']) ?>">#<?= h($arrItem['tag4']) ?></a>
   <?php endif; ?>
   <?php if(!empty($arrItem['tag5'])): ?>
-  <a href="/item/tag/<?= h($arrItem['tag5']) ?>"><?= h($arrItem['tag5']) ?></a>
+  <a href="/item/tag/<?= h($arrItem['tag5']) ?>">#<?= h($arrItem['tag5']) ?></a>
   <?php endif; ?>
 </div>
 
-
+<div class="addbox">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- コマース商品ページ下部 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5709399179121964"
+     data-ad-slot="3640338908"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
 <h2 class="f25 mb20 mt50">この商品を買った人はこんな商品も買っています</h2>
-<div class="row item clearfix sp-listing">
+<div class="row item clearfix sp-listing underList1">
   <?php foreach($arrLikeData as $row): ?>
-  <div class="col-xs-4 col-sm-4 col-md-3">
+  <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
     <?= $this->element('item', ['row' => $row]) ?>
   </div>
   <?php endforeach; ?>
 </div>
 
 <h2 class="f25 mb20">この出品者の人気商品</h2>
-<div class="row item clearfix sp-listing">
+<div class="row item clearfix sp-listing underList2">
   <?php foreach($arrSaleRanking as $row): ?>
-  <div class="col-xs-4 col-sm-4 col-md-3">
+  <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
     <?= $this->element('item', ['row' => $row]) ?>
   </div>
   <?php endforeach; ?>
 </div>
 
 <h2 class="f25 mb20">商品ランキング</h2>
-<div class="row item clearfix sp-listing">
+<div class="row item clearfix sp-listing underList3">
   <?php foreach($arrSaleRank as $row): ?>
-  <div class="col-xs-4 col-sm-4 col-md-3">
+  <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
     <?= $this->element('item', ['row' => $row]) ?>
   </div>
   <?php endforeach; ?>
 </div>
 
 <h2 class="f25 mb20">最近閲覧した商品</h2>
-<div class="row item clearfix sp-listing">
+<div class="row item clearfix sp-listing underList4">
   <?php foreach($arrBrowse as $row): ?>
-  <div class="col-xs-4 col-sm-4 col-md-3">
+  <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
     <?= $this->element('item', ['row' => $row]) ?>
   </div>
   <?php endforeach; ?>
 </div>
+<div  class="addbox">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- コマース商品ページ下部 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5709399179121964"
+     data-ad-slot="3640338908"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+	</div>
 </section>

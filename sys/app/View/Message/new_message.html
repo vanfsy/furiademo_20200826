@@ -46,7 +46,7 @@ $this->assign('script_area', $code_area);
         <tr>
           <th>&nbsp;</th>
           <td>
-            <p class="item-p01"><a href="/message/trashlist">ゴミ箱</a></p>
+            <p class="item-p01"><a href="/message/trashlist">ゴミ箱のメール一覧</a></p>
           </td>
         </tr>
       </tbody>
@@ -73,11 +73,11 @@ $this->assign('script_area', $code_area);
     <table class="mb15 width100">
       <tr>
         <td class="pl10 pt05 pb05 width50p">宛先：</td>
-        <td class="pl10 pt05 pb05"><?php echo $arrToMember['Member']['company'] ?> <?php echo $arrToMember['Member']['name'] ?> </td>
+        <td class="pl10 pt05 pb05 newmessage"><?php echo $arrToMember['Member']['company'] ?> <?php echo $arrToMember['Member']['name'] ?> </td>
       </tr>
       <tr>
         <td class="pl10 pt05 pb05 width50p">件名：</td>
-        <td class="pl10 pt05 pb05">
+        <td class="pl10 pt05 pb05 newmessage">
           <?php echo $this->Form->input('subject',
           array('label' => false,
           'div' => false,

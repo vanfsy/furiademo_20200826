@@ -24,7 +24,7 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-    Router::connect('/', array('controller' => 'Pages', 'action' => 'index'));
+    //Router::connect('/', array('controller' => 'Pages', 'action' => 'index'));
 
 /*
     Router::connect('/admin', array('controller' => 'Dashboard', 'action' => 'index'));
@@ -35,7 +35,7 @@
     Router::connect('/estimate/:action/*', array('controller' => 'Estimate'));
     Router::connect('/form/:action/*', array('controller' => 'Form'));
     Router::connect('/item/:action/*', array('controller' => 'Items'));
-    Router::connect('/item', array('controller' => 'Items', 'action' => 'index'));
+    Router::connect('/', array('controller' => 'Items', 'action' => 'index'));
 
     Router::connect('/member_regist/:action/*', array('controller' => 'MemberRegist'));
     Router::connect('/member_regist', array('controller' => 'MemberRegist', 'action' => 'index'));
@@ -47,6 +47,13 @@
     Router::connect('/info/:action/*', array('controller' => 'Info'));
 
     Router::connect('/cart/printing', array('controller' => 'Cart', 'action' => 'printing'));
+
+/*2020 10/02追加サイトマップ*/
+Router::connect('/sitemap.xml', array('controller' => 'Sitemaps', 'action' => 'index'));
+
+/*2020 10/02追加サイトマップ*/
+Router::connect('/rss.xml', array('controller' => 'Rss', 'action' => 'index'));
+
 
     Router::parseExtensions('json');
 
@@ -66,3 +73,6 @@
  * the built-in default routes.
  */
     require CAKE . 'Config' . DS . 'routes.php';
+
+
+

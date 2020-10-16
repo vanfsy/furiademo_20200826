@@ -103,7 +103,7 @@ array('type'=>'hidden',
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">会社名<span class="red">*</span></label>
+    <label class="col-sm-3 control-label">会社名</label>
 
     <div class="col-sm-9">
         <?php echo $this->
@@ -206,16 +206,16 @@ array('type'=>'hidden',
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">銀行名<span class="red">*</span></label>
+    <label class="col-sm-3 control-label">銀行名</label>
 
     <div class="col-sm-9">
-        <?php echo $this->Form->input('bank_name',array('label'=>false,'class'=>'form-control','placeholder' =>
+        <?php echo $this->Form->input('bank_name',array('novalidate' => true,'label'=>false,'class'=>'form-control','placeholder' =>
         '銀行名','value'=>$arrUser['bank_name'])) ?>
     </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">支店名<span class="red">*</span></label>
+    <label class="col-sm-3 control-label">支店名</label>
 
     <div class="col-sm-9">
         <?php echo $this->Form->input('branch_name',array('label'=>false,'class'=>'form-control','placeholder' =>
@@ -224,7 +224,7 @@ array('type'=>'hidden',
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">支店コード<span class="red">*</span></label>
+    <label class="col-sm-3 control-label">支店コード</label>
 
     <div class="col-sm-9">
         <?php echo $this->Form->input('branch_code',array('label'=>false,'class'=>'form-control','placeholder' =>
@@ -233,7 +233,7 @@ array('type'=>'hidden',
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">銀行口座<span class="red">*</span></label>
+    <label class="col-sm-3 control-label">銀行口座</label>
 
     <div class="col-sm-9">
         <?php echo $this->Form->input('account_no',array('label'=>false,'class'=>'form-control','placeholder' =>
@@ -242,7 +242,7 @@ array('type'=>'hidden',
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3 control-label">口座名義<span class="red">*</span></label>
+    <label class="col-sm-3 control-label">口座名義</label>
 
     <div class="col-sm-9">
         <?php echo $this->Form->input('deposit_name',array('label'=>false,'class'=>'form-control','placeholder' =>

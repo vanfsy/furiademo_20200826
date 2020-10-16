@@ -1,0 +1,1131 @@
+<?php
+$meta_title = Configure::read('html.itemRegister');
+$meta_keywords = Configure::read('html.itemRegister');
+$meta_description = Configure::read('html.itemRegister');
+
+$this->set('title_for_layout',$meta_title);
+$this->Html->meta('keywords', $meta_keywords, array('inline' => false));
+$this->Html->meta('description', $meta_description, array('inline' => false));
+
+$arrCategory = Configure::read('arrCategory');
+$arrSelling = Configure::read('arrSelling');
+$arrShippingPayer = Configure::read('arrShippingPayer');
+$arrShippingMethod = Configure::read('arrShippingMethod');
+$arrPref = Configure::read('arrPref');
+$arrShippingDuration = Configure::read('arrShippingDuration');
+
+
+$this->Html->css('/css/remodal.css', null, array('inline' => false));
+$this->Html->css('/css/remodal-default-theme.css', null, array('inline' => false));
+
+$this->Html->script('/js/remodal.js', array('inline' => false));
+$this->Html->script('/js/page.js', array('inline' => false));
+
+$code_area = <<< EOF
+var imgfilename = "";
+if($('#ItemMainImageFileName').val()!=""){
+	imgfilename = imgfilename+"1";
+}
+if($('#ItemSubImage1FileName').val()!=""){
+	imgfilename = imgfilename+"2";
+}
+if($('#ItemSubImage2FileName').val()!=""){
+	imgfilename = imgfilename+"3";
+}
+if($('#ItemSubImage3FileName').val()!=""){
+	imgfilename = imgfilename+"4";
+}
+if($('#ItemSubImage4FileName').val()!=""){
+	imgfilename = imgfilename+"5";
+}
+$("#image_file_name").val(imgfilename);
+if($('#shippingpayer').val()=="送料込み(出品者負担)"){
+	//$('.style_sMethod').css("display","block");
+}else{
+	//$('.style_sMethod').css("display","none");
+	//$("#shippingmethod").removeAttr("required");
+	//$("#shippingmethod").attr('name', 'data[Item][shippingmethod2]');
+	//$("#shippingmethod").attr('id', 'shippingmethod2');
+	//$("#shippingmethod_bk").attr('name', 'data[Item][shippingmethod]');
+	//$("#shippingmethod_bk").attr('id', 'shippingmethod');
+}
+$('.curArea').click(function() {
+$("#input_name").val($(this).attr("name"));
+});
+$('#fileup_submit').click(function() {
+$("#fileup_title").val($("#title").val());
+$("#fileup_price").val($("#price").val());
+$("#fileup_category").val($("#category").val());
+$("#fileup_discription").val($("#discription").val());
+$("#fileup_message").val($("#message").val());
+$("#fileup_password").val($("#password").val());
+$("#fileup_quantity").val($("#quantity").val());
+$("#fileup_fee").val($("#fee").val());
+$("#fileup_tag1").val($("#tag1").val());
+$("#fileup_tag2").val($("#tag2").val());
+$("#fileup_tag3").val($("#tag3").val());
+$("#fileup_tag4").val($("#tag4").val());
+$("#fileup_tag5").val($("#tag5").val());
+$("#fileup_shippingpayer").val($("#shippingpayer").val());
+$("#fileup_shippingmethod").val($("#shippingmethod").val());
+$("#fileup_shippingfromarea").val($("#shippingfromarea").val());
+$("#fileup_shippingduration").val($("#shippingduration").val());
+$("#FileUpForm").submit();
+});
+$('#fileInputarea').click(function() {
+	//main_image
+	//sub_image1
+	//sub_image2
+	//sub_image3
+	//sub_image4
+	var iname = "";
+	if($('#ItemMainImageFileName').val()==""){
+		iname = "main_image";
+	}else if($('#ItemSubImage1FileName').val()==""){
+		iname = "sub_image1";
+	}else if($('#ItemSubImage2FileName').val()==""){
+		iname = "sub_image2";
+	}else if($('#ItemSubImage3FileName').val()==""){
+		iname = "sub_image3";
+	}else{
+		iname = "sub_image4";
+	}
+	$("#input_name").val(iname);
+	$('#fileInput').click();
+	return false;
+});
+$('#fileInput').change(function(){
+	if($(this).val()==""){
+	}else{
+		$('#fileup_submit').click();
+	}
+	return false;
+});
+var dragDropAreas2 = document.getElementsByClassName('drag-drop-inside2');
+for (var i=0; i<dragDropAreas2.length; i++) {
+    var dda = dragDropAreas2[i];
+    dda.addEventListener('dragover', function(evt){
+        evt.preventDefault();
+        this.classList.add('dragover');
+    });
+    dda.addEventListener('dragleave', function(evt){
+        evt.preventDefault();
+        this.classList.remove('dragover');
+    });
+    dda.addEventListener('drop', function(evt){
+        evt.preventDefault();
+        this.classList.remove('dragover');
+        var inputName = document.getElementById('input_name');
+		var iname = "";
+		if($('#ItemMainImageFileName').val()==""){
+			iname = "main_image";
+		}else if($('#ItemSubImage1FileName').val()==""){
+			iname = "sub_image1";
+		}else if($('#ItemSubImage2FileName').val()==""){
+			iname = "sub_image2";
+		}else if($('#ItemSubImage3FileName').val()==""){
+			iname = "sub_image3";
+		}else{
+			iname = "sub_image4";
+		}
+        inputName.value = iname;
+        fileInput.files = evt.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+    });
+}
+$('.img_del').on('click', function(){
+	page_url = location.href;
+	imgname = $(this).data('imgname');
+	imgfilename = $("#image_file_name").val();
+	imgfilename.replace(imgname, "");
+	$("#image_file_name").val(imgfilename);
+    $.ajax({
+        url: $(this).data('url'),
+        method: 'post'
+    }).done(function(){
+        window.location.href = page_url;
+    }).fail(function(){
+    });
+});
+$('#shippingpayer').change(function(){
+	if($(this).val()=="送料込み(出品者負担)"){
+		//$('.style_sMethod').css("display","block");
+		//$("#shippingmethod").attr('name', 'data[Item][shippingmethod_bk]');
+		//$("#shippingmethod").attr('id', 'shippingmethod_bk');
+		//$("#shippingmethod2").attr('name', 'data[Item][shippingmethod]');
+		//$("#shippingmethod2").attr('id', 'shippingmethod');
+		//$("#shippingmethod").attr("required","required");
+	}else{
+		//$('.style_sMethod').css("display","none");
+		//$("#shippingmethod").removeAttr("required");
+		//$("#shippingmethod").attr('name', 'data[Item][shippingmethod2]');
+		//$("#shippingmethod").attr('id', 'shippingmethod2');
+		//$("#shippingmethod_bk").attr('name', 'data[Item][shippingmethod]');
+		//$("#shippingmethod_bk").attr('id', 'shippingmethod')
+	}
+	return false;
+});
+EOF;
+$this->assign('script_area', $code_area);
+?>
+<style>
+.style_attention{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    font: inherit;
+    vertical-align: baseline;
+    margin: 0;
+    border: 0px;
+	margin-left: 8px;
+	font-size: 12px;
+	padding: 0 4px;
+    background-color: #ff0211;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+.style_label{
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    font: inherit;
+    vertical-align: baseline;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+.syuppin{
+	display:none;
+}
+.style_section{
+	background-color: rgb(255, 255, 255);
+	margin: 0px auto;
+	width: 100%;
+}
+.style_row{
+	padding: 16px;
+}
+.style_hr{
+	border-top-width: 1px;
+    border-top-color: #efefef;
+    border-left: 0 solid #efefef;
+    border-bottom: 0 solid #efefef;
+    border-right: 0 solid #efefef;
+    border-top-style: solid;
+    margin: 0;
+}
+.style_formgroup{
+	margin: 0;
+}
+.style_formgroup32{
+	margin: 0;
+	margin-top: 32px;
+}
+.style_inputarea{
+	margin-top: 16px;
+}
+.style_textField {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    height: 48px;
+    margin: 0;
+    outline: none;
+    padding: 0 16px;
+    width: inherit;
+    width: 100%;
+}
+input[type="text"]{
+    width: 100%;
+}
+.style_textareaField {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #222;
+    font-size: 16px;
+    margin: 0;
+    outline: none;
+    padding: 13px 16px;
+    resize: vertical;
+    vertical-align: middle;
+    width: 100%;
+}
+textarea {
+    height: initial;
+}
+.style_detailed{
+    color: rgb(136, 136, 136);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4em;
+    margin-bottom: 24px;
+    margin-top: 40px;
+}
+.size18{
+	max-width: 50%;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.style_curArea{
+	cursor: pointer;
+}
+.style_imgbox {
+    place-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(245, 245, 245);
+    border: 1px dashed rgb(204, 204, 204);
+    cursor: pointer;
+    display: flex;
+    height: 100%;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    position: relative;
+    transition: all 0.5s ease-out 0s;
+}
+.style_eskCSR {
+    fill: rgb(34, 34, 34);
+    height: 24px;
+    margin-bottom: 8px;
+    width: 24px;
+}
+.style_hiIdYe,
+.style_hiIdYe2 {
+    font-size: 12px;
+    line-height: 1.4em;
+    text-align: center;
+    width: 100%;
+}
+.style_controls{
+    margin-top: 16px;
+}
+.style_imgbox_top {
+    flex: 1 1 0%;
+    height: 112px;
+    margin-top: 8px;
+    padding: 0px 4px;
+}
+.style_imgbox_top2 {
+    height: 112px;
+    padding: 0px 4px;
+    /*margin-top: 8px;*/
+    width: 20%;
+    float:left;
+}
+.style_emOuNa {
+    background-color: rgb(245, 245, 245);
+}
+.style_ekGWJo {
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(0, 149, 238);
+    cursor: pointer;
+    display: flex;
+    height: 32px;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.style_chLoyS1,
+.style_chLoyS2,
+.style_chLoyS3,
+.style_chLoyS4,
+.style_chLoyS5{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 80px;
+}
+.style_sMethod{
+	/*display: none;*/
+}
+h2{
+	border-bottom: 0px;
+	background: #fafafa;
+}
+@media screen and (min-width:768px){
+	.style_section{
+		max-width: 700px;
+	}
+	.style_row{
+		padding: 40px;
+	}
+	.size18{
+		max-width: 18%;
+	}
+	.style_imgbox_top {
+    	height: 150px;
+	}
+	.style_imgbox_top2 {
+	    height: 150px;
+	    width: 20%;
+	}
+	.style_chLoyS1,
+	.style_chLoyS2,
+	.style_chLoyS3,
+	.style_chLoyS4,
+	.style_chLoyS5{
+	    height: 118px;
+	}
+}
+.style_hiIdYe {
+    display: block;
+}
+.style_hiIdYe2 {
+    display: none;
+}
+@media (max-width: 767px){
+	.style_hiIdYe {
+	    display: none;
+	}
+	.style_hiIdYe2 {
+	    display: block;
+	}
+}
+</style>
+<div class="style_section">
+    <?php $completeModal = isset($isSuccess) ? 1 : 0; ?>
+    <div data-isSuccess = "<?php echo $completeModal; ?>" id = "checkModal"></div>
+    <h2 class="f25 mb20">商品登録ページ</h2>
+    <?php
+    if (isset($limitedMsg) && $limitedMsg != '') :
+    ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <?php echo $limitedMsg; ?>
+    </div>
+    <?php else : ?>
+    <?php
+    $msg = $this->Session->flash('auth');
+    if(!empty($msg)):
+    ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <?php echo $msg; ?>
+    </div>
+    <?php endif; ?>
+    <?php echo $this->Form->create('Item',
+    array('id' => 'ItemForm',
+    'class' => 'spml_0',
+    'url' => '/mypage/item/'.$arrData['Item']['id'],
+    'type' => 'file',
+    )); ?>
+    <?php echo $this->Form->input('id',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['id'],
+    )) ?>
+    <?php echo $this->Form->input('member_id',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['member_id'],
+    )) ?>
+    <?php echo $this->Form->input('mode',
+    array('label' => false,
+    'type' => 'hidden',
+    'id' => 'mode',
+    )) ?>
+    <?php echo $this->Form->input('main_image_file_name',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['main_image_file_name'],
+    )) ?>
+    <?php echo $this->Form->input('sub_image1_file_name',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['sub_image1_file_name'],
+    )) ?>
+    <?php echo $this->Form->input('sub_image2_file_name',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['sub_image2_file_name'],
+    )) ?>
+    <?php echo $this->Form->input('sub_image3_file_name',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['sub_image3_file_name'],
+    )) ?>
+    <?php echo $this->Form->input('sub_image4_file_name',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['sub_image4_file_name'],
+    )) ?>
+    <div class="style_row">
+
+        <p class="">
+        	<span class="strong"><span class="style_label">出品画像</span></span><span class="style_attention">必須</span>
+        	<div>
+        		<span class="drag-drop-info small">最大5枚までアップロードできます。1枚以上アップロードしてください。</span>
+        	</div>
+        </p>
+        <div class="style_controls">
+            <?php
+            if(!empty($arrData['Item']['main_image_file_name'])){
+            ?>
+            <style>
+				.style_hiIdYe,
+				.style_hiIdYe2 {
+				    display: none;
+				}
+				.style_chLoyS1{
+					background-image: url("/upload/items/<?=$arrData['Item']['id']?>/<?=substr_replace($arrData['Item']['main_image_file_name'],"_thumb",strrpos($arrData['Item']['main_image_file_name'], "."), 0)?>");
+				}
+            </style>
+        	<div class="style_imgbox_top2">
+        		<div class="style_emOuNa">
+        			<div class="style_chLoyS1"></div>
+        			<hr class="style_hr">
+        			<div class="style_ekGWJo"><a class="img_del" href="javascript:void(0)" data-imgname="1" data-url="/mypage/item_image_del_new/main_image/<?php echo $arrData['Item']['id'] ?>/<?php echo $arrData['Item']['main_image_file_name']?>/<?php echo $arrData['Item']['sub_image1_file_name']?>/<?php echo $arrData['Item']['sub_image2_file_name']?>/<?php echo $arrData['Item']['sub_image3_file_name']?>/<?php echo $arrData['Item']['sub_image4_file_name']?>">削除</a></div>
+        		</div>
+	        </div>
+            <?php
+            }
+            ?>
+            <?php
+            if(!empty($arrData['Item']['sub_image1_file_name'])){
+            ?>
+            <style>
+				.style_chLoyS2{
+					background-image: url("/upload/items/<?=$arrData['Item']['id']?>/<?=substr_replace($arrData['Item']['sub_image1_file_name'],"_thumb",strrpos($arrData['Item']['sub_image1_file_name'], "."), 0)?>");
+				}
+            </style>
+        	<div class="style_imgbox_top2">
+        		<div class="style_emOuNa">
+        			<div class="style_chLoyS2"></div>
+        			<hr class="style_hr">
+        			<div class="style_ekGWJo"><a class="img_del" href="javascript:void(0)" data-imgname="2" data-url="/mypage/item_image_del_new/sub_image1/<?php echo $arrData['Item']['id'] ?>/<?php echo $arrData['Item']['main_image_file_name']?>/<?php echo $arrData['Item']['sub_image1_file_name']?>/<?php echo $arrData['Item']['sub_image2_file_name']?>/<?php echo $arrData['Item']['sub_image3_file_name']?>/<?php echo $arrData['Item']['sub_image4_file_name']?>">削除</a></div>
+        		</div>
+	        </div>
+            <?php
+            }
+            ?>
+            <?php
+            if(!empty($arrData['Item']['sub_image2_file_name'])){
+            ?>
+            <style>
+				.style_chLoyS3{
+					background-image: url("/upload/items/<?=$arrData['Item']['id']?>/<?=substr_replace($arrData['Item']['sub_image2_file_name'],"_thumb",strrpos($arrData['Item']['sub_image2_file_name'], "."), 0)?>");
+				}
+            </style>
+        	<div class="style_imgbox_top2">
+        		<div class="style_emOuNa">
+        			<div class="style_chLoyS3"></div>
+        			<hr class="style_hr">
+        			<div class="style_ekGWJo"><a class="img_del" href="javascript:void(0)" data-imgname="3" data-url="/mypage/item_image_del_new/sub_image2/<?php echo $arrData['Item']['id'] ?>/<?php echo $arrData['Item']['main_image_file_name']?>/<?php echo $arrData['Item']['sub_image1_file_name']?>/<?php echo $arrData['Item']['sub_image2_file_name']?>/<?php echo $arrData['Item']['sub_image3_file_name']?>/<?php echo $arrData['Item']['sub_image4_file_name']?>">削除</a></div>
+        		</div>
+	        </div>
+            <?php
+            }
+            ?>
+            <?php
+            if(!empty($arrData['Item']['sub_image3_file_name'])){
+            ?>
+            <style>
+				.style_chLoyS4{
+					background-image: url("/upload/items/<?=$arrData['Item']['id']?>/<?=substr_replace($arrData['Item']['sub_image3_file_name'],"_thumb",strrpos($arrData['Item']['sub_image3_file_name'], "."), 0)?>");
+				}
+            </style>
+        	<div class="style_imgbox_top2">
+        		<div class="style_emOuNa">
+        			<div class="style_chLoyS4"></div>
+        			<hr class="style_hr">
+        			<div class="style_ekGWJo"><a class="img_del" href="javascript:void(0)" data-imgname="4" data-url="/mypage/item_image_del_new/sub_image3/<?php echo $arrData['Item']['id'] ?>/<?php echo $arrData['Item']['main_image_file_name']?>/<?php echo $arrData['Item']['sub_image1_file_name']?>/<?php echo $arrData['Item']['sub_image2_file_name']?>/<?php echo $arrData['Item']['sub_image3_file_name']?>/<?php echo $arrData['Item']['sub_image4_file_name']?>">削除</a></div>
+        		</div>
+	        </div>
+            <?php
+            }
+            ?>
+            <?php
+            if(!empty($arrData['Item']['sub_image4_file_name'])){
+            ?>
+            <style>
+				.style_chLoyS5{
+					background-image: url("/upload/items/<?=$arrData['Item']['id']?>/<?=substr_replace($arrData['Item']['sub_image4_file_name'],"_thumb",strrpos($arrData['Item']['sub_image4_file_name'], "."), 0)?>");
+				}
+            </style>
+        	<div class="style_imgbox_top2">
+        		<div class="style_emOuNa">
+        			<div class="style_chLoyS5"></div>
+        			<hr class="style_hr">
+        			<div class="style_ekGWJo"><a class="img_del" href="javascript:void(0)" data-imgname="5" data-url="/mypage/item_image_del_new/sub_image4/<?php echo $arrData['Item']['id'] ?>/<?php echo $arrData['Item']['main_image_file_name']?>/<?php echo $arrData['Item']['sub_image1_file_name']?>/<?php echo $arrData['Item']['sub_image2_file_name']?>/<?php echo $arrData['Item']['sub_image3_file_name']?>/<?php echo $arrData['Item']['sub_image4_file_name']?>">削除</a></div>
+        		</div>
+	        </div>
+            <?php
+            }
+            ?>
+            <?php
+            if(!empty($arrData['Item']['sub_image4_file_name'])){
+            }else{
+            ?>
+        	<div class="style_imgbox_top">
+		        <div class="style_imgbox drag-drop-inside2" id="fileInputarea">
+		        <svg width="24" height="24" fill="#222222" fill-rule="evenodd" viewBox="0 0 24 24" aria-hidden="true" class="style_eskCSR">
+		        <path d="M19.3,5H16.73l-.8-1.61A.7.7,0,0,0,15.3,3H8.7a.7.7,0,0,0-.63.39L7.27,5H4.7A2.7,2.7,0,0,0,2,7.7V18.3A2.7,2.7,0,0,0,4.7,21H19.3A2.7,2.7,0,0,0,22,18.3V7.7A2.7,2.7,0,0,0,19.3,5ZM12,17.3A4.3,4.3,0,1,1,16.3,13,4.31,4.31,0,0,1,12,17.3Z"></path>
+		        </svg>
+		        <p class="style_hiIdYe">ドラッグアンドドロップ<br>またはクリックしてファイルをアップロード</p>
+		        <p class="style_hiIdYe2">タップしてファイルをアップロード</p>
+		        </div>
+	        </div>
+            <?php
+            }
+            ?>
+        </div>
+        <input type="hidden" id="image_file_name" name="data[Item][image_file_name]" value="<?php echo $arrData['Item']['image_file_name'] ?>">
+        <?php echo $this->Form->error('image_file_name') ?>
+        <?php echo $this->Form->error('main_image_file_name') ?>
+        <?php echo $this->Form->error('sub_image1_file_name') ?>
+        <?php echo $this->Form->error('sub_image2_file_name') ?>
+        <?php echo $this->Form->error('sub_image3_file_name') ?>
+        <?php echo $this->Form->error('sub_image4_file_name') ?>
+        <div class="clearfix"></div>
+
+		<hr class="style_hr">
+
+		<div class="style_formgroup32">
+			<span class="style_label">商品名</span><span class="style_attention">必須</span>
+	        <div class="style_inputarea">
+		        <?php echo $this->Form->input('title',
+		        array('label' => false,
+		        'div' => false,
+		        'type' => 'text',
+		        'id' => 'title',
+		        'class' => 'style_textField',
+		        'size' => 42,
+		        'value' => $arrData['Item']['title'],
+                'placeholder' => '5文字以上60文字以内',
+		        )) ?>
+	        </div>
+        </div>
+
+		<div class="style_formgroup32">
+	        <span class="style_label">商品説明</span><span class="style_attention">必須</span>
+	        <div class="style_inputarea">
+		        <?php echo $this->Form->input('discription',
+		        array('label' => false,
+		        'div' => false,
+		        'type' => 'text',
+		        'id' => 'discription',
+		        'class' => 'style_textareaField',
+		        'rows' => 7,
+		        'cols' => 40,
+		        'value' => $arrData['Item']['discription'],
+                'placeholder' => '商品の説明（必須 1,000文字以内）
+（色、素材、重さ、定価、注意点など）
+
+例）9月に収穫予定のお野菜です。とれたて新鮮お野菜を10kgお届けします。
+          ',
+		        )) ?>
+	        </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">カテゴリ</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('category',
+                array('label' => false,
+                'div' => false,
+                'type' => 'select',
+                'id' => 'category',
+                'class'=>'form-control',
+                'options' => $arrCategory,
+                'value' => $arrData['Item']['category'],
+                )) ?>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+		<hr class="style_hr">
+
+		<p class="style_detailed">配送について</p>
+
+		<div class="style_formgroup32">
+            <span class="style_label">配送料の負担</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('shippingpayer',
+                array('label' => false,
+                'div' => false,
+                'type' => 'select',
+                'id' => 'shippingpayer',
+                'class'=>'form-control',
+                'options' => $arrShippingPayer,
+                'value' => $arrData['Item']['shippingpayer'],
+                )) ?>
+            </div>
+        </div>
+
+        <input type="hidden" name="data[Item][shippingmethod_bk]" id="shippingmethod_bk" value="0">
+		<div class="style_formgroup32 style_sMethod">
+            <span class="style_label">配送の方法</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('shippingmethod',
+                array('label' => false,
+                'div' => false,
+                'type' => 'select',
+                'id' => 'shippingmethod',
+                'class'=>'form-control',
+                'options' => $arrShippingMethod,
+                'value' => $arrData['Item']['shippingmethod'],
+                )) ?>
+            </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">発送元の地域</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('shippingfromarea',
+                array('label' => false,
+                'div' => false,
+                'type' => 'select',
+                'id' => 'shippingfromarea',
+                'class'=>'form-control',
+                'options' => $arrPref,
+                'value' => $arrData['Item']['shippingfromarea'],
+                )) ?>
+            </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">発送までの日数</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('shippingduration',
+                array('label' => false,
+                'div' => false,
+                'type' => 'select',
+                'id' => 'shippingduration',
+                'class'=>'form-control',
+                'options' => $arrShippingDuration,
+                'value' => $arrData['Item']['shippingduration'],
+                )) ?>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+		<hr class="style_hr">
+
+		<div class="style_formgroup32">
+            <span class="style_label">状況</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('selling',
+                array('label' => false,
+                'div' => false,
+                'type' => 'select',
+                'class'=>'form-control',
+                'options' => $arrSelling,
+                'value' => $arrData['Item']['selling'],
+                )) ?>
+            </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">価格</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+            	<?php echo $this->Form->input('price',
+                array('label' => false,
+                'div' => false,
+                'type' => 'text',
+                'id' => 'price',
+                'size' => 10,
+                'value' => $arrData['Item']['price'],
+                'class' => 'size20 style_textField',
+                )) ?> 円
+            </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">購入者へのメッセージ</span><span class="style_attention">必須</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('message',
+                array('label' => false,
+                'div' => false,
+                'class' => 'sp_width90 style_textareaField',
+                'type' => 'text',
+                'id' => 'message',
+                'rows' => 5,
+                'cols' => 40,
+                'value' => $arrData['Item']['message'],
+                'placeholder' => 'ご購入ありがとうございました',
+                )) ?>
+            </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">在庫数</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('quantity',
+                array('label' => false,
+                'div' => false,
+                'class' => 'size20 style_textField',
+                'type' => 'text',
+                'id' => 'quantity',
+                'size' => 10,
+                'value' => $arrData['Item']['quantity'],
+                )) ?>
+            </div>
+        </div>
+
+		<div class="style_formgroup32">
+            <span class="style_label">キーワードタグ</span>
+            <div class="style_inputarea">
+                <?php echo $this->Form->input('tag1',
+                array('label' => false,
+                'div' => false,
+                'class' => 'size18 style_textField',
+                'type' => 'text',
+                'id' => 'tag1',
+                'size' => 14,
+                'value' => $arrData['Item']['tag1'],
+                )) ?>
+                <?php echo $this->Form->input('tag2',
+                array('label' => false,
+                'div' => false,
+                'class' => 'size18 style_textField',
+                'type' => 'text',
+                'id' => 'tag2',
+                'size' => 14,
+                'value' => $arrData['Item']['tag2'],
+                )) ?>
+                <?php echo $this->Form->input('tag3',
+                array('label' => false,
+                'div' => false,
+                'class' => 'size18 style_textField',
+                'type' => 'text',
+                'id' => 'tag3',
+                'size' => 14,
+                'value' => $arrData['Item']['tag3'],
+                )) ?>
+                <?php echo $this->Form->input('tag4',
+                array('label' => false,
+                'div' => false,
+                'class' => 'size18 style_textField',
+                'type' => 'text',
+                'id' => 'tag4',
+                'size' => 14,
+                'value' => $arrData['Item']['tag4'],
+                )) ?>
+                <?php echo $this->Form->input('tag5',
+                array('label' => false,
+                'div' => false,
+                'class' => 'size18 style_textField',
+                'type' => 'text',
+                'id' => 'tag5',
+                'size' => 14,
+                'value' => $arrData['Item']['tag5'],
+                )) ?>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+
+            <h4 class="strong underline pt20">誓約事項確認</h4>
+            <p class="red pt20">RELEASEコマースには、食品以外の出品は<a href="https://shop.release.sc/commerce-terms/" target="_blank"><u>利用規約</u></a>違反となり、<a href="https://shop.release.sc/commerce-terms/" target="_blank"><u>利用規約</u></a>第6条3項に違反する商品を出品した場合、事前の警告なく出品商品の削除及び即時アカウントの停止を行います。
+違法な商品を出品した場合、法的な処罰の対象となる可能性があります。
+また、出品をもちまして<a href="https://shop.release.sc/commerce-terms/" target="_blank"><u>利用規約</u></a>に同意したことになります。</p>
+            <p>
+            <input type="hidden" name="data[Item][agree]" id="ItemAgree" value="1">
+            <p class="textcenter pt20">
+                <input type="submit" value="商品をアップロードする" class="mybtn-bl mybtn-bl-md">
+            </p>
+            <?php echo $this->Form->end(); ?>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php echo $this->element('item_complete'); ?>
+<div class="remodal" data-remodal-id="modal" data-remodal-options="hashTracking:false">
+    <?php echo $this->Form->create('Item',
+    array('id' => 'FileUpForm',
+    'url' => '/mypage/image_fileup',
+    'type' => 'file',
+    )); ?>
+    <?php echo $this->Form->input('id',
+    array('label' => false,
+    'type' => 'hidden',
+    'value' => $arrData['Item']['id'],
+    )) ?>
+    <?php echo $this->Form->input('member_id',
+    array('label' => false,
+    'id' => 'input_member_id',
+    'type' => 'hidden',
+    'value' => $arrData['Item']['member_id'],
+    )) ?>
+    <?php echo $this->Form->input('input_name',
+    array('label' => false,
+    'type' => 'hidden',
+    'id' => 'input_name',
+    )) ?>
+    <?php echo $this->Form->input('title',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_title',
+    'value' => $arrData['Item']['title'],
+    )) ?>
+    <?php echo $this->Form->input('price',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_price',
+    'value' => $arrData['Item']['price'],
+    )) ?>
+    <?php echo $this->Form->input('category',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_category',
+    'value' => $arrData['Item']['category'],
+    )) ?>
+    <?php echo $this->Form->input('discription',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_discription',
+    'value' => $arrData['Item']['discription'],
+    )) ?>
+    <?php echo $this->Form->input('message',
+    array('label' => false,
+    'div' => false,
+    'class' => 'pl10',
+    'type' => 'hidden',
+    'id' => 'fileup_message',
+    'value' => $arrData['Item']['message'],
+    )) ?>
+    <?php echo $this->Form->input('quantity',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_quantity',
+    'value' => $arrData['Item']['quantity'],
+    )) ?>
+    <?php echo $this->Form->input('password',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_password',
+    'value' => $arrData['Item']['password'],
+    )) ?>
+    <?php echo $this->Form->input('tag1',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_tag1',
+    'value' => $arrData['Item']['tag1'],
+    )) ?>
+    <?php echo $this->Form->input('tag2',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_tag2',
+    'value' => $arrData['Item']['tag2'],
+    )) ?>
+    <?php echo $this->Form->input('tag3',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_tag3',
+    'value' => $arrData['Item']['tag3'],
+    )) ?>
+    <?php echo $this->Form->input('tag4',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_tag4',
+    'value' => $arrData['Item']['tag4'],
+    )) ?>
+    <?php echo $this->Form->input('tag5',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_tag5',
+    'value' => $arrData['Item']['tag5'],
+    )) ?>
+    <?php echo $this->Form->input('shippingpayer',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_shippingpayer',
+    'value' => $arrData['Item']['shippingpayer'],
+    )) ?>
+    <?php echo $this->Form->input('shippingmethod',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_shippingmethod',
+    'value' => $arrData['Item']['shippingmethod'],
+    )) ?>
+    <?php echo $this->Form->input('shippingfromarea',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_shippingfromarea',
+    'value' => $arrData['Item']['shippingfromarea'],
+    )) ?>
+    <?php echo $this->Form->input('shippingduration',
+    array('label' => false,
+    'div' => false,
+    'type' => 'hidden',
+    'id' => 'fileup_shippingduration',
+    'value' => $arrData['Item']['shippingduration'],
+    )) ?>
+    <?php echo $this->Form->input('main_image_file_name',
+    array('type'=>'hidden',
+    'label'=>false,
+    'div' => false,
+    'value' => $arrData['Item']['main_image_file_name']
+    )) ?>
+    <?php echo $this->Form->input('sub_image1_file_name',
+    array('type'=>'hidden',
+    'label'=>false,
+    'div' => false,
+    'value' => $arrData['Item']['sub_image1_file_name']
+    )) ?>
+    <?php echo $this->Form->input('sub_image2_file_name',
+    array('type'=>'hidden',
+    'label'=>false,
+    'div' => false,
+    'value' => $arrData['Item']['sub_image2_file_name']
+    )) ?>
+    <?php echo $this->Form->input('sub_image3_file_name',
+    array('type'=>'hidden',
+    'label'=>false,
+    'div' => false,
+    'value' => $arrData['Item']['sub_image3_file_name']
+    )) ?>
+    <?php echo $this->Form->input('sub_image4_file_name',
+    array('type'=>'hidden',
+    'label'=>false,
+    'div' => false,
+    'value' => $arrData['Item']['sub_image4_file_name']
+    )) ?>
+
+    <button data-remodal-action="close" class="remodal-close"></button>
+    <h2>ファイルアップロード</h2>
+    <p>画像・商品ファイルをアップロードして下さい。</p>
+    <div id="drag-drop-area">
+        <div class="drag-drop-inside m10 p30　front-img">
+            <p class="drag-drop-info">ここにファイルをドロップ</p>
+            <p class="drag-drop-info">または</p>
+            <p><input type="file" name="data[Item][file][]"  multiple="multiple" class="aligncenter" accept="image/jpeg,image/png,image/gif" id="fileInput"/></p>
+            <!--
+            <p><?php echo $this->Form->input('file',array('type'=>'file','multiple'=>'multiple','label'=>false,'div' => false,'class'=>'aligncenter','accept'=>'image/jpeg,image/png,image/gif','id'=>'fileInput')) ?></p>
+            -->
+        </div>
+    </div>
+    <button data-remodal-action="cancel" class="remodal-cancel">キャンセル</button>
+    <button id="fileup_submit" class="remodal-confirm">アップロード</button>
+    <?php echo $this->Form->end(); ?>
+</div>
+<script>
+
+var maxFileSize = <?php echo $arrUploadMaxSize ?>;
+
+/* ファイルアップロード時のスクリプト */
+function updateProgress(e) {
+    if (e.lengthComputable) {
+        var percent = e.loaded / e.total;
+        $("#progress").attr("value", percent * 100);
+    }
+}
+function uploadFile() {
+    var formData = new FormData(fileUpForm);
+    $('#progress').val(0);
+    $('#progress').show();
+    // Ajaxで送信（プログレスバーを出すためだけ）
+    $.ajax({
+        url: fileUpForm.action,
+        method: 'post',
+        data: formData,
+        processData: false,
+        contentType: false,
+        xhr: function(){
+            XHR = $.ajaxSettings.xhr();
+            if(XHR.upload){
+                XHR.upload.addEventListener("progress", updateProgress, false);
+            }
+            return XHR;
+        }
+    }).done(function( res ) {
+        if (res.trim() === '') {
+            console.log( 'INVALID' );
+            alert('送信に失敗しました。');
+        } else {
+            console.log( 'SUCCESS', res );
+            window.location.href = $(res).find('form').attr('action');
+        }
+        // document.write(res);
+    }).fail(function( jqXHR, textStatus, errorThrown ) {
+        console.log( 'ERROR', jqXHR, textStatus, errorThrown );
+        alert('送信に失敗しました。');
+    });
+}
+
+var fileInput = document.getElementById('fileInput');
+var fileUpForm = document.getElementById('FileUpForm');
+
+var dragDropAreas = document.getElementsByClassName('drag-drop-inside');
+
+for (var i=0; i<dragDropAreas.length; i++) {
+    var dda = dragDropAreas[i];
+    dda.addEventListener('dragover', function(evt){
+        evt.preventDefault();
+        this.classList.add('dragover');
+    });
+    dda.addEventListener('dragleave', function(evt){
+        evt.preventDefault();
+        this.classList.remove('dragover');
+    });
+    dda.addEventListener('drop', function(evt){
+        evt.preventDefault();
+        this.classList.remove('dragover');
+
+        var inputName = document.getElementById('input_name');
+        var id = evt.srcElement.id;
+        if (!id) {
+            id = evt.srcElement.parentElement.id;
+        }
+        var i = id.slice(-1);
+        var name = '';
+        if (i==0) {
+            name = 'main_image';
+        } else if (i=='i'){
+            name = 'item_file';
+        } else {
+            name = 'sub_image' + i;
+        }
+        inputName.value = name;
+
+        fileInput.files = evt.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+        if (jQuery) {
+            var modal = jQuery['remodal'].lookup[jQuery('[data-remodal-id="modal"]').data('remodal')];
+            if (modal.getState() == 'closed') {
+                modal.open();
+            }
+        }
+    });
+}
+fileInput.addEventListener('change', function(evt){
+    //if (this.files && this.files.length == 1) {
+    if (this.files) {
+        for (let i = 0; i < this.files.length; i++) {
+	        fileSize = this.files[i].size;
+	        bytMaxFileSize = maxFileSize * 1024 * 1024;
+	        if (fileSize >= bytMaxFileSize) {
+	            this.value = "";
+	            this.files = null;
+	            alert("サイズが" + maxFileSize + "M以上のファイルはアップロード出来ません。");
+	        }
+        }
+    } else {
+        this.value = "";
+        this.files = null;
+    }
+});
+</script>

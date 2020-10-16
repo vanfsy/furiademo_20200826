@@ -10,9 +10,17 @@ $arrMailMagFlg = Configure::write('arrMailMagFlg');
 
 $arrCategory = Configure::read('arrCategory');
 $arrSelling = Configure::read('arrSelling');
+$arrShippingPayer = Configure::read('arrShippingPayer');
+$arrShippingMethod = Configure::read('arrShippingMethod');
+$arrPref = Configure::read('arrPref');
+$arrShippingDuration = Configure::read('arrShippingDuration');
 $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) ? $arrMemberList : array());
 ?>
-
+<style>
+.style_sMethod{
+	/*display: none;*/
+}
+</style>
 <h1 class="page-header">商品情報</h1>
 <?php echo $this->element('alert'); ?>
 
@@ -73,7 +81,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">タイトル<span class="red">*</span></label>
+            <label class="col-sm-3 control-label">商品名<span class="red">*</span></label>
             <div class="col-sm-9">
               <?php echo $this->Form->input('title',
                 array('label'=>false,
@@ -86,7 +94,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">ジャンル<span class="red">*</span></label>
+            <label class="col-sm-3 control-label">カテゴリ<span class="red">*</span></label>
             <div class="col-sm-9">
               <?php echo $this->Form->input('category',
                 array('label'=>false,
@@ -147,6 +155,80 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
                       'type'=> 'text',
                       'class'=>'form-control',
                       'value' => $arrItemDetail['Item']['fee']
+                      )) ?>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">配送料の負担<span class="red">*</span></label>
+            <div class="col-sm-9">
+              <?php echo $this->Form->input('shippingpayer',
+                array('label'=>false,
+                      'div' => false,
+                      'type' => 'select', 
+                      'class'=>'form-control',
+                      'id' => 'shippingpayer',
+                      'value' => $arrItemDetail['Item']['shippingpayer'],
+                      'options'=>$arrShippingPayer,
+                      )) ?>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">送料について</label>
+            <div class="col-sm-9">
+              <?php echo $this->Form->input('aboutshippingcost',
+                array('label'=>false,
+                      'div' => false,
+                      'rows'=>'2',
+                      'class'=>'form-control',
+                      'value' => $arrItemDetail['Item']['aboutshippingcost']
+                      )) ?>
+            </div>
+          </div>
+
+          <div class="form-group style_sMethod">
+            <label class="col-sm-3 control-label">配送の方法<span class="red">*</span></label>
+            <div class="col-sm-9">
+              <input type="hidden" name="data[Item][shippingmethod_bk]" id="shippingmethod_bk" value="0">
+              <?php echo $this->Form->input('shippingmethod',
+                array('label'=>false,
+                      'div' => false,
+                      'type' => 'select', 
+                      'class'=>'form-control',
+                      'id' => 'shippingmethod',
+                      'value' => $arrItemDetail['Item']['shippingmethod'],
+                      'options'=>$arrShippingMethod,
+                      )) ?>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">発送元の地域<span class="red">*</span></label>
+            <div class="col-sm-9">
+              <?php echo $this->Form->input('shippingfromarea',
+                array('label'=>false,
+                      'div' => false,
+                      'type' => 'select', 
+                      'class'=>'form-control',
+                      'id' => 'shippingfromarea',
+                      'value' => $arrItemDetail['Item']['shippingfromarea'],
+                      'options'=>$arrPref,
+                      )) ?>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">発送までの日数<span class="red">*</span></label>
+            <div class="col-sm-9">
+              <?php echo $this->Form->input('shippingduration',
+                array('label'=>false,
+                      'div' => false,
+                      'type' => 'select', 
+                      'class'=>'form-control',
+                      'id' => 'shippingduration',
+                      'value' => $arrItemDetail['Item']['shippingduration'],
+                      'options'=>$arrShippingDuration,
                       )) ?>
             </div>
           </div>
@@ -243,7 +325,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">メイン画像</label>
+            <label class="col-sm-3 control-label">画像1</label>
             <div class="col-sm-9">
 <?php if(!empty($arrItemDetail['Item']['main_image_file_name'])): ?>
               <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.main_image',array('style'=>'thumb')));?></p>
@@ -254,7 +336,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">サブ画像1</label>
+            <label class="col-sm-3 control-label">画像2</label>
             <div class="col-sm-9">
 <?php if(!empty($arrItemDetail['Item']['sub_image1_file_name'])): ?>
               <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image1',array('style'=>'thumb')));?></p>
@@ -265,7 +347,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">サブ画像2</label>
+            <label class="col-sm-3 control-label">画像3</label>
             <div class="col-sm-9">
 <?php if(!empty($arrItemDetail['Item']['sub_image2_file_name'])): ?>
               <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image2',array('style'=>'thumb')));?></p>
@@ -276,7 +358,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">サブ画像3</label>
+            <label class="col-sm-3 control-label">画像4</label>
             <div class="col-sm-9">
 <?php if(!empty($arrItemDetail['Item']['sub_image3_file_name'])): ?>
               <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image3',array('style'=>'thumb')));?></p>
@@ -287,7 +369,7 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">サブ画像4</label>
+            <label class="col-sm-3 control-label">画像5</label>
             <div class="col-sm-9">
 <?php if(!empty($arrItemDetail['Item']['sub_image4_file_name'])): ?>
               <p><?php echo str_replace('/admin','',$this->Upload->uploadImage($arrItemDetail,'Item.sub_image4',array('style'=>'thumb')));?></p>
@@ -310,3 +392,34 @@ $arrMemberList = array('' => '選択して下さい') + (!empty($arrMemberList) 
           </div>
     
 <?php echo $this->Form->end(); ?>
+<script type="text/javascript" src="/kimonon/js/jquery_002.js"></script>
+<script type="text/javascript">
+if($('#shippingpayer').val()=="送料込み(出品者負担)"){
+	//$('.style_sMethod').css("display","block");
+}else{
+	//$('.style_sMethod').css("display","none");
+	//$("#shippingmethod").removeAttr("required");
+	//$("#shippingmethod").attr('name', 'data[Item][shippingmethod2]');
+	//$("#shippingmethod").attr('id', 'shippingmethod2');
+	//$("#shippingmethod_bk").attr('name', 'data[Item][shippingmethod]');
+	//$("#shippingmethod_bk").attr('id', 'shippingmethod');
+}
+$('#shippingpayer').change(function(){
+	if($(this).val()=="送料込み(出品者負担)"){
+		//$('.style_sMethod').css("display","block");
+		//$("#shippingmethod").attr('name', 'data[Item][shippingmethod_bk]');
+		//$("#shippingmethod").attr('id', 'shippingmethod_bk');
+		//$("#shippingmethod2").attr('name', 'data[Item][shippingmethod]');
+		//$("#shippingmethod2").attr('id', 'shippingmethod');
+		//$("#shippingmethod").attr("required","required");
+	}else{
+		//$('.style_sMethod').css("display","none");
+		//$("#shippingmethod").removeAttr("required");
+		//$("#shippingmethod").attr('name', 'data[Item][shippingmethod2]');
+		//$("#shippingmethod").attr('id', 'shippingmethod2');
+		//$("#shippingmethod_bk").attr('name', 'data[Item][shippingmethod]');
+		//$("#shippingmethod_bk").attr('id', 'shippingmethod')
+	}
+	return false;
+});
+</script>

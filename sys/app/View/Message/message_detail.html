@@ -46,16 +46,17 @@ $this->assign('script_area', $code_area);
                 <tr>
                     <th>&nbsp;</th>
                     <td>
-                        <p class="item-p01"><a href="/message/trashlist">ゴミ箱</a></p>
+                        <p class="item-p01"><a href="/message/trashlist">ゴミ箱のメール一覧</a></p>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <h3 class="mb30 mt40"><span>メッセージ詳細</span></h3>
-        <table class="border-all-gray mb30 width100">
+        <!--<h3 class="mb30 mt40"><span>メッセージ詳細</span></h3>-->
+		<h3 class="mb30 mt40">メッセージ詳細</h3>
+        <table class="border-all-gray mb30 width100 messagetext">
             <tr>
-                <td>
+                <td class="auto_linker">
                 <p class="p05 text-left" colspan="2"><strong><?php echo h($arrData['Message']['subject']) ?></strong></p>
 
                 <p class="p05 text-left">
@@ -75,7 +76,8 @@ $this->assign('script_area', $code_area);
         </table>
 
         <?php if($arrData['Message']['member_id'] == $arrData['Message']['to_member_id']): ?>
-        <h3 class="mb30 mt40"><span>返信する</span></h3>
+        <!--<h3 class="mb30 mt40"><span>返信する</span></h3>-->
+		<h3 class="mb30 mt40">返信する</h3>
         <?php echo $this->Form->create('Message', array('id' => 'formMessage', 'url' => '/message/message_detail/'.$intMessageId)); ?>
 
         <?php echo $this->Form->input('to_member_id',
@@ -93,30 +95,30 @@ $this->assign('script_area', $code_area);
         'type' => 'hidden',
         'value' => 1,
         )) ?>
-        <table class="mb15 width100">
+        <table class="mb15 width100 messagefoam">
             <tr>
                 <td>
-                <p  class="p05 text-left border-bottom-black">宛先：
+                <p  class="p05 text-left">宛先：
                <?php echo $arrData['FromMember']['company'] ?> <?php echo $arrData['FromMember']['name'] ?></p>
 
-                <p  class="p05 text-left border-bottom-black">件名：
+                <p  class="p05 text-left">件名：
 
                     <?php echo $this->Form->input('subject',
                     array('label' => false,
                     'div' => false,
                     'type' => 'text',
-                    'class' => 'border-none',
+                    'class' => '',
                     'value' => $arrSendData['Message']['subject'],
                     )) ?>
                 </p>
 
-                <p class="p05 text-left border-bottom-black">
+                <p class="p05 text-left">
 
                     <?php echo $this->Form->input('body',
                     array('label' => false,
                     'div' => false,
                     'type' => 'text',
-                    'class' => 're-width border-none',
+                    'class' => 're-width',
                     'rows' => 10,
                     'cols' => 50,
                     'value' => $arrSendData['Message']['body'],
@@ -127,9 +129,12 @@ $this->assign('script_area', $code_area);
             <tr>
                 <td colspan="2" class="pt05 pb05 text-center"> 
                     <p class="textcenter pt20">
-                        <input type="submit" value="送信" class="p10 mybtn-bl mybtn-bl-sm"  style="80px">
+                        <!--<input type="submit" value="送信" class="p10 mybtn-bl mybtn-bl-sm"  style="80px">
                         <input type="reset" value="取り消し" class="p10  mybtn-bl mybtn-bl-sm" id="no_agree" style="120px">
-                        <input type="button" id="btnDraft" value="下書きに保存" class="p10  mybtn-bl mybtn-bl-sm" style="150px">
+                        <input type="button" id="btnDraft" value="下書きに保存" class="p10  mybtn-bl mybtn-bl-sm" style="150px">-->
+						<input type="submit" value="送信" class="mb20 mybtn-bl mybtn-bl-md"  style="80px">
+                        <input type="reset" value="取り消し" class="mb20 mybtn-bl mybtn-bl-md mybtn-second" id="no_agree" style="120px">
+                        <input type="button" id="btnDraft" value="下書きに保存" class="mb20 mybtn-bl mybtn-bl-md mybtn-second" style="150px">
                     </p>
             </tr>
         </table>				

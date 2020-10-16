@@ -42,7 +42,8 @@
 	float:left !important;
 }
 .spviewnum{
-	width:70px;
+	/*width:70px;*/
+	width: 200px;
 	float:right !important;
 }
  ul.cate_menu{

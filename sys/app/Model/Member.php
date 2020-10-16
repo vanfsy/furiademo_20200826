@@ -135,36 +135,36 @@ class Member extends AppModel {
                 'message' => '必須項目です。'
             ),
         ),
-        'bank_name' => array(
-            'required' => array(
-                'rule' => 'notEmpty',
-                'message' => '必須項目です'
-            ),
-        ),
-        'branch_name' => array(
-            'required' => array(
-                'rule' => 'notEmpty',
-                'message' => '必須項目です'
-            ),
-        ),
-        'branch_code' => array(
-            'required' => array(
-                'rule' => 'notEmpty',
-                'message' => '必須項目です'
-            ),
-        ),
-       'account_no' => array(
-            'required' => array(
-                'rule' => 'notEmpty',
-                'message' => '必須項目です'
-            ),
-        ),
-        'deposit_name' => array(
-            'required' => array(
-                'rule' => 'notEmpty',
-                'message' => '必須項目です'
-            ),
-        ),
+        //'bank_name' => array(
+        //    'required' => array(
+        //        'rule' => 'notEmpty',
+        //        'message' => '必須項目です'
+        //    ),
+        //),
+        //'branch_name' => array(
+        //    'required' => array(
+        //        'rule' => 'notEmpty',
+        //        'message' => '必須項目です'
+        //    ),
+        //),
+        //'branch_code' => array(
+        //    'required' => array(
+        //        'rule' => 'notEmpty',
+        //        'message' => '必須項目です'
+        //    ),
+        //),
+        //'account_no' => array(
+        //    'required' => array(
+        //        'rule' => 'notEmpty',
+        //        'message' => '必須項目です'
+        //    ),
+        //),
+        //'deposit_name' => array(
+        //    'required' => array(
+        //        'rule' => 'notEmpty',
+        //        'message' => '必須項目です'
+        //    ),
+        //),
     );
 
     public $validate_profile = array(

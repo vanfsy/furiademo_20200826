@@ -36,7 +36,7 @@ $this->assign('script_area', $code_area);
     <?php endif; ?>
 <?php if(!empty($arrMemberInfo)): ?>
     <div class="row mypage_row">
-    <div class="col-xs-12 col-sm-3 col-md-3"> 　
+    <div class="col-xs-12 col-sm-3 col-md-3 mypage-left"> 　
       <div class="aligncenter mypage_progimg">
           <div class="block-apsect block-1x1">
               <div class="block-content">
@@ -49,7 +49,7 @@ $this->assign('script_area', $code_area);
             ?>
             </div>
         </div>
-        <p class="item-p01"><a data-remodal-target="modal" class="curArea" name="image">画像を編集する</a></p>
+        <p class="item-p01"><a data-remodal-target="modal" class="curArea" name="image">画像をアップロードする</a></p>
 <?php if(!empty($arrMember['image_file_name'])): ?>
           <p class="item-p01"><a class="image_del" href="javascript:void(0)" data-url="/mypage/member_image_del/">画像削除</a></p>
 <?php endif; ?>
@@ -112,7 +112,8 @@ $this->assign('script_area', $code_area);
       </table>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-9 col-md-9">
+		<!--<div class="col-xs-12 col-sm-9 col-md-9 mypage-right">-->
+    <div class="mypage-right">
       <div class="waku01">ユーザー名</div>
       <p class="mypage_user_name"><?php echo $arrMember['company'] ?> [ <?php echo $arrMember['name'] ?> ]</p>
       <p class="black alignright"><a href="/mypage/sellerinfo/<?php echo $arrMember['id'] ?>">販売者ページを確認する</a></p>

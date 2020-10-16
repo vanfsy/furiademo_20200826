@@ -86,14 +86,14 @@ class PagesController extends FrontAppController {
 
     function index(){
 
-        $arrFrontNewDatas = $this->Item->getFrontNewDatas(4);
+        $arrFrontNewDatas = $this->Item->getFrontNewDatas(96);//TOPPAGE新着商品数
         $this->set('arrNewDatas',$arrFrontNewDatas);
 
         // 商品ランキング
-        $arrSaleRank = $this->Item->getSaleRankEntity();
+        $arrSaleRank = $this->Item->getSaleRankEntity();//多分TOPPAGE商品ランキング数
         $this->set('arrSaleRank',$arrSaleRank);
 
-        $arrSellerRank = $this->Member->getSellerRankEntity();
+        $arrSellerRank = $this->Member->getSellerRankEntity();//多分TOPPAGEピックアップ数
         $this->set('arrSellerRank',$arrSellerRank);
 
         $this->loadModel('HtmlPart');

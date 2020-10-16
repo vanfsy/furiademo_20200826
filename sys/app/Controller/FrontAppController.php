@@ -117,4 +117,23 @@ class FrontAppController extends AppController {
             ->subject($mailData['subject'])
             ->send();
     }
+    
+    // メール送信メソッド2
+    protected function sendMail_bcc($mailData, $mailTo, $viewVars) {
+        $Email = new CakeEmail();
+        if (Configure::read('debug') == '2') {
+            $Email->config(array('log' => 'mail_sent'));
+        }
+        $admin_mail = Configure::read('info.adminMail');
+        //$admin_mail = "yunopapa169@gmail.com";
+        $Email->template($mailData['templete'])
+            ->emailFormat('html')
+            ->viewVars($viewVars)
+            //->from(array(Configure::read('info.sendDomain') => 'fillmall'))
+            ->from(array(Configure::read('info.sendDomain') => Configure::read('info.siteName')))
+            ->to($mailTo)
+            ->bcc($admin_mail)
+            ->subject($mailData['subject'])
+            ->send();
+    }
 }

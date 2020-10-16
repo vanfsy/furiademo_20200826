@@ -1,0 +1,11 @@
+# ベーシック認証
+AuthType Basic
+AuthName "IDとパスワードを入力してください。"
+AuthUserFile /var/www/html/zN5xKxcL0c1BWk4R/phpMyAdmin_pma/.htpasswd
+AuthGroupFile /dev/null
+require valid-user
+
+# .htaccess への直アクセス遮断
+<Files ~ "^.(htpasswd|htaccess)$">
+ deny from all
+</Files>

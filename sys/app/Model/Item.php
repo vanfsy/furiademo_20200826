@@ -136,6 +136,36 @@ class Item extends AppModel {
                 'message' => 'このフィールドは999,999,999以下を入力してください'
             )
         ),
+        'image_file_name' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '画像を1枚以上アップロードしてください。'
+            ),
+        ),
+        'shippingpayer' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '必須項目です。'
+            )
+        ),
+        'shippingmethod' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '必須項目です。'
+            )
+        ),
+        'shippingfromArea' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '必須項目です。'
+            )
+        ),
+        'shippingduration' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '必須項目です。'
+            )
+        ),
         // 'main_image_file_name' => array(
         //     'required' => array(
         //         'rule' => array('notEmpty'),
@@ -179,8 +209,8 @@ class Item extends AppModel {
                 'message' => '必須項目です。'
             ),
             'maxLength' => array(
-                'rule' => array( 'maxLength', 1000),
-                'message' => 'このフィールドは1000文字以内です'
+                'rule' => array( 'maxLength', 2000),
+                'message' => 'このフィールドは2000文字以内です'
             )
         ),
         'message' => array(
@@ -284,18 +314,48 @@ class Item extends AppModel {
                 'message' => '誓約できない方は登録いただけません'
             ),
         ),
-        'main_image_file_name' => array(
+        'image_file_name' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '画像を1枚以上アップロードしてください。'
+            ),
+        ),
+        'shippingpayer' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
                 'message' => '必須項目です。'
-            ),
+            )
         ),
-        'sub_image1_file_name' => array(
+        'shippingmethod' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
                 'message' => '必須項目です。'
-            ),
+            )
         ),
+        'shippingfromarea' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '必須項目です。'
+            )
+        ),
+        'shippingduration' => array(
+            'required' => array(
+                'rule' => array('notEmpty'),
+                'message' => '必須項目です。'
+            )
+        ),
+       // 'main_image_file_name' => array(
+       //     'required' => array(
+       //         'rule' => array('notEmpty'),
+       //         'message' => '必須項目です。'
+       //     ),
+       // ),
+       // 'sub_image1_file_name' => array(
+       //     'required' => array(
+       //         'rule' => array('notEmpty'),
+       //         'message' => '必須項目です。'
+       //     ),
+       // ),
     );
 
     public $validate_fileup = array(
@@ -363,11 +423,11 @@ class Item extends AppModel {
         'quality' => 100, //   ☆画質指定、デフォルトでは75
         'path' => UPLOAD_PACK_PATH, //'../upload/:model/:id/:basename_:style.:extension',
         'styles' => array(
-            'list_l' => '400w', //  ☆リサイズしたいサイズを書く
+            'list_l' => '500w', //  ☆リサイズしたいサイズを書く
             //'list_m' => '200x150',//  ☆リサイズしたいサイズを書く
             //'list_s' => '160x100', //  ☆リサイズしたいサイズを書く
 	    //20181128 yoshi
-            'list_s' => '160x160', //  ☆リサイズしたいサイズを書く
+            'list_s' => '210x210', //  ☆リサイズしたいサイズを書く
             'thumb' => '200w'//  ☆リサイズしたいサイズを書く
         )
     );
@@ -401,7 +461,6 @@ class Item extends AppModel {
     }
 
     public function isImageDel($id,$file_name) {
-
         if($file_name != 'main_image' && $file_name != 'sub_image1' &&
             $file_name != 'sub_image2' && $file_name != 'sub_image3' && $file_name != 'sub_image4'){
             return false;
@@ -409,7 +468,101 @@ class Item extends AppModel {
         $data['Item']['id'] = $id;
         $data['Item'][$file_name] = null;
         return $this->save($data);
+    }
 
+	public function isImageDel_new($id,$file_name, $name1, $name2, $name3, $name4, $name5) {
+		if($file_name != 'main_image' && $file_name != 'sub_image1' &&
+			$file_name != 'sub_image2' && $file_name != 'sub_image3' && $file_name != 'sub_image4'){
+			return false;
+		}
+		$data['Item']['id'] = $id;
+		$data2['Item']['id'] = $id;
+		//$data['Item'][$file_name] = null;
+		if($file_name=='main_image'){
+			if($name2!=""){
+				$data['Item']['main_image'] = null;
+				$data2['Item']['main_image_file_name'] = $name2;
+				if($name3!=""){
+					$data['Item']['sub_image1_file_name'] = $name3;
+					if($name4!=""){
+						$data['Item']['sub_image2_file_name'] = $name4;
+						if($name5!=""){
+							$data['Item']['sub_image3_file_name'] = $name5;
+							$data['Item']['sub_image4_file_name'] = null;
+						}else{
+							$data['Item']['sub_image3_file_name'] = null;
+						}
+					}else{
+						$data['Item']['sub_image2_file_name'] = null;
+					}
+				}else{
+					$data['Item']['sub_image1_file_name'] = null;
+				}
+			}else{
+				$data['Item']['main_image'] = null;
+				$data2['Item']['main_image'] = null;
+			}
+		}
+		if($file_name=='sub_image1'){
+			if($name3!=""){
+				$data['Item']['sub_image1'] = null;
+				$data2['Item']['sub_image1_file_name'] = $name3;
+				if($name4!=""){
+					$data['Item']['sub_image2_file_name'] = $name4;
+					if($name5!=""){
+						$data['Item']['sub_image3_file_name'] = $name5;
+						$data['Item']['sub_image4_file_name'] = null;
+					}else{
+						$data['Item']['sub_image3_file_name'] = null;
+					}
+				}else{
+					$data['Item']['sub_image2_file_name'] = null;
+				}
+			}else{
+				$data['Item']['sub_image1'] = null;
+			}
+		}
+		if($file_name=='sub_image2'){
+			if($name4!=""){
+				$data['Item']['sub_image2'] = null;
+				$data2['Item']['sub_image2_file_name'] = $name4;
+				if($name5!=""){
+					$data['Item']['sub_image3_file_name'] = $name5;
+					$data['Item']['sub_image4_file_name'] = null;
+				}else{
+					$data['Item']['sub_image3_file_name'] = null;
+				}
+			}else{
+				$data['Item']['sub_image2'] = null;
+				$data2['Item']['sub_image2'] = null;
+			}
+		}
+		if($file_name=='sub_image3'){
+			if($name5!=""){
+				$data['Item']['sub_image3'] = null;
+				$data2['Item']['sub_image3_file_name'] = $name5;
+				$data['Item']['sub_image4_file_name'] = null;
+			}else{
+				$data['Item']['sub_image3'] = null;
+				$data2['Item']['sub_image3'] = null;
+			}
+		}
+		if($file_name=='sub_image4'){
+			$data['Item']['sub_image4'] = null;
+			$data2['Item']['sub_image4'] = null;
+		}
+		$this->save($data);
+		return $this->save($data2);
+	}
+
+    public function isImageDel_new2($id,$file_name) {
+        if($file_name != 'main_image' && $file_name != 'sub_image1' &&
+            $file_name != 'sub_image2' && $file_name != 'sub_image3' && $file_name != 'sub_image4'){
+            return false;
+        }
+        $data['Item']['id'] = $id;
+        $data['Item'][$file_name] = null;
+        return $this->save($data);
     }
 
     public function isHaving($id,$member_id) {

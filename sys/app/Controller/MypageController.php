@@ -616,6 +616,8 @@ class MypageController extends FrontAppController {
         }
         if (!empty($id)) {
             $arrData = $this->Item->findById($id);
+            //var_dump($arrData);
+            //exit;
         } else {
             $maxCnt = $this->Config->getMaxItemCnt();
             $cnt = $this->Item->find('count', array('conditions' => array('Item.member_id' => $this->user_id, 'Item.del_flg' => '0')));
@@ -631,6 +633,9 @@ class MypageController extends FrontAppController {
             $data = $this->request->data;
             $fileValid = true;
             $data['Item']['save_flg'] = 1;
+            
+            //var_dump($data);
+            //exit;
             // $data['Item']['selling'] = $arrData['Item']['selling'];
             // ファイルアップ
 
@@ -655,6 +660,8 @@ class MypageController extends FrontAppController {
             if ($fileValid) {
                 $this->Item->create($data);
                 $this->Item->validate = $this->Item->user_validate;
+                //var_dump($data);
+                //exit;
                 if ($this->Item->save($data)) {
                     $id = $data['Item']['id'];
                     if (empty($id)) {
@@ -712,6 +719,15 @@ class MypageController extends FrontAppController {
         $this->redirect('/mypage/item/' . $id);
     }
 
+	function makeRandStr($length) {
+	    $str = array_merge(range('a', 'z'), range('0', '9'), range('A', 'Z'));
+	    $r_str = null;
+	    for ($i = 0; $i < $length; $i++) {
+	        $r_str .= $str[rand(0, count($str) - 1)];
+	    }
+	    return $r_str;
+	}
+
     function image_fileup() {
         if ($this->request->is('post') || $this->request->is('put')) {
             $data = $this->request->data;
@@ -719,7 +735,73 @@ class MypageController extends FrontAppController {
                 $this->item_fileup($data['Item']['id']);
             } else {
                 $data = $this->request->data;
-                $data['Item'][$data['Item']['input_name']] = $data['Item']['file'];
+                //var_dump($data);
+                //exit;
+                $input_name_array = array();
+                $cnt = 0;
+                $cnt = count($data['Item']['file']);
+                if($data['Item']['input_name']=="main_image"){
+                	$input_name_array[0]="main_image";
+                	$input_name_array[1]="sub_image1";
+                	$input_name_array[2]="sub_image2";
+                	$input_name_array[3]="sub_image3";
+                	$input_name_array[4]="sub_image4";
+                	if($cnt>5){
+                		$cnt=5;
+                	}
+                }
+                if($data['Item']['input_name']=="sub_image1"){
+                	$input_name_array[0]="sub_image1";
+                	$input_name_array[1]="sub_image2";
+                	$input_name_array[2]="sub_image3";
+                	$input_name_array[3]="sub_image4";
+                	if($cnt>4){
+                		$cnt=4;
+                	}
+                }
+                if($data['Item']['input_name']=="sub_image2"){
+                	$input_name_array[0]="sub_image2";
+                	$input_name_array[1]="sub_image3";
+                	$input_name_array[2]="sub_image4";
+                	if($cnt>3){
+                		$cnt=3;
+                	}
+                }
+                if($data['Item']['input_name']=="sub_image3"){
+                	$input_name_array[0]="sub_image3";
+                	$input_name_array[1]="sub_image4";
+                	if($cnt>2){
+                		$cnt=2;
+                	}
+                }
+                if($data['Item']['input_name']=="sub_image4"){
+                	$input_name_array[0]="sub_image4";
+                	if($cnt>1){
+                		$cnt=1;
+                	}
+                }
+                for($i = 0; $i < $cnt; $i++){
+	                $data['Item'][$input_name_array[$i]] = $data['Item']['file'][$i];
+	                $extension_tmp = "jpg";
+	                if($data['Item']['file'][$i]['type']=="image/jpeg"){
+	                	$extension_tmp = "jpg";
+	                }
+	                if($data['Item']['file'][$i]['type']=="image/png"){
+	                	$extension_tmp = "png";
+	                }
+	                if($data['Item']['file'][$i]['type']=="image/gif"){
+	                	$extension_tmp = "gif";
+	                }
+	                if($data['Item']['file'][$i]['type']=="image/bmp"){
+	                	$extension_tmp = "bmp";
+	                }
+	                if($data['Item']['file'][$i]['type']=="image/svg+xml"){
+	                	$extension_tmp = "svg";
+	                }
+	                $file_tmp_name = $this->makeRandStr(16).".".$extension_tmp;
+	                $data['Item']['file'][$i]['name'] = $file_tmp_name;
+	                $data['Item'][$input_name_array[$i]]['name'] = $file_tmp_name;
+                }
                 $this->Item->validate = $this->Item->validate_fileup;
                 if ($this->Item->save($data)) {
                     $id = $data['Item']['id'];
@@ -775,7 +857,16 @@ class MypageController extends FrontAppController {
         if (!$this->Item->isHaving($item_id, $member_id)) {
             $this->redirect('/mypage/item/' . $item_id);
         }
-        $this->Item->isImageDel($item_id, $file_name);
+        //$this->Item->isImageDel($item_id, $file_name);
+        $this->Item->isImageDel_new2($item_id, $file_name);
+        $this->redirect('/mypage/item/' . $item_id);
+    }
+    function item_image_del_new($file_name, $item_id, $name1, $name2, $name3, $name4, $name5) {
+        $member_id = $this->user_id;
+        if (!$this->Item->isHaving($item_id, $member_id)) {
+            $this->redirect('/mypage/item/' . $item_id);
+        }
+        $this->Item->isImageDel_new($item_id, $file_name, $name1, $name2, $name3, $name4, $name5);
         $this->redirect('/mypage/item/' . $item_id);
     }
 

@@ -19,18 +19,54 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+<head prefix="og: http://ogp.me/ns# website: http://ogp.me/ns/website#">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <!--[if lt IE 9]><meta http-equiv="X-UA-Compatible" content="IE=edge"></script><![endif]-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?php echo $title_for_layout; ?></title>
-  <?php echo $this->fetch('meta'); ?>
-  <meta name="keywords" content="Mallento">
-  <meta name="description" content="Mallento">
+
+<?php if($this->action === "index"){?>
+<meta name="description" content="RELEASEコマースは、全国の農家や漁師や家庭菜園をされている方々より、丹精込めて栽培した野菜や果物・水揚げされたばかりの新鮮な魚介類などを全国のすべての消費者にお届けする「食」のオンラインマーケットです。">
+<meta name="keywords" content="フリーマーケット,フリマ,食品,食材,お取り寄せ,農業,漁業,畜産業,通販">
+<meta name="robots" content="index,follow" />
+<meta property="og:title"       content="RELEASEコマース　食のオンラインマーケット（フリマ）">
+<meta property="og:description" content="RELEASEコマースは、全国の農家や漁師や家庭菜園をされている方々より、丹精込めて栽培した野菜や果物・水揚げされたばかりの新鮮な魚介類などを全国のすべての消費者にお届けする「食」のオンラインマーケットです。" />
+<meta property="og:type"        content="website" />
+<meta property="og:url"         content="https://shop.release.sc/" />
+<meta property="og:image"       content="https://shop.release.sc/kimonon/img/mallento_furimo_LP1.png" />
+<meta property="fb:app_id"      content="680634728741145" />
+<meta name="twitter:card"       content="summary" />
+	
+<?php }elseif($this->action === "detail"){
+echo $this->fetch('meta');
+$meta_description = str_replace("\r\n", '', mb_strimwidth($arrItem['discription'], 0, 160, "…"));
+
+?>
+
+	
+<meta name="robots" content="index,follow" />
+<meta property="og:title"       content="RELEASEコマース　食のオンラインマーケット（フリマ）">
+<meta property="og:description" content="<?php echo $meta_description ?>" />
+<meta property="og:type"        content="website" />
+<meta property="og:url"         content="https://shop.release.sc/" />
+<meta property="og:image"       content="https://shop.release.sc/kimonon/img/mallento_furimo_LP1.png" />
+<meta property="fb:app_id"      content="680634728741145" />
+<meta name="twitter:card"       content="summary" />
+<?php }else{echo $this->fetch('meta');?><meta name="robots" content="index,follow" /><?php } ?>
+
+
+
+
+<?php /*
+<meta name="twitter:site"       content="@foo_bar" />
+<meta name="twitter:creator"    content="@foo_bar" />
+*/ ?>
+	
+	
   <!-- css -->
   <link href="/kimonon/css/common.css" rel="stylesheet">
-  <link href="/kimonon/css/main.css" rel="stylesheet">
+  <link href="/kimonon/css/main.css?5" rel="stylesheet">
   <link href="/kimonon/css/bootstrap.css" rel="stylesheet">
   <link href="/kimonon/css/slider-pro.css" rel="stylesheet">
   <link href="/kimonon/css/magnific-popup.css" rel="stylesheet">
@@ -48,7 +84,7 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
   </script>
 </head>
 
-<body cz-shortcut-listen="true">
+<body cz-shortcut-listen="true" id="<?php echo $this->action; ?>">
   <a id="top"></a>
 
   <!-- ヘッダここから -->
@@ -61,7 +97,7 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
 
 
             <div class="header_logo_box">
-              <p><a href="/"><img src="/kimonon/img/mallento_furimo_LP1.png" alt="マレント" class="header-logo" width="230"></a></p>
+              <p><a href="/"><img src="/kimonon/img/mallento_furimo_LP1.png" alt="RELEASE COMMERCE" class="header-logo" width="230"></a></p>
             </div>
             <ul class="header_menu pt10">
 
@@ -72,6 +108,14 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
               <li><a href="/mypage/" class="mybtn mybtn01">ログイン</a></li>
               <li><a href="/member_regist" class="mybtn mybtn02">新規登録</a></li>
             <?php endif; ?>
+<li class="spnone header_search">
+    <form class="mb10" action="/item/search/" enctype="text/plain" method="get">
+      <div class="search_box">
+        <input type="search" name="keyword" placeholder="検索する">
+        <button class="search_btn"><span class="search_mark"></span></button>
+      </div>
+    </form>
+</li>
             </ul>
 
             <div id="sp_menu_btn"> <span class="f12">MENU</span> </div>
@@ -85,8 +129,15 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
               <nav>
                 <ul id="menu" class="clearfix">
                   <?php foreach ($dspCategories as $key => $val): ?>
-                  <li><a href="/item/category/<?= h($key) ?>"><?= h($key) ?></a></li>
+                  <li class="nopc_display_none"><a href="/item/category/<?= h($key) ?>"><?= h($key) ?></a></li>
                   <?php endforeach; ?>
+					<li class="pc_display_none"><a href="/lp-commerce/">RELEASEコマースについて</a></li>
+					<li class="pc_display_none"><a href="/item/category/">カテゴリー一覧</a></li>
+					<li class="pc_display_none"><a href="/item/sale_rank">人気ランキング</a></li>
+					<li class="pc_display_none"><a href="/item/tag/">人気キーワード</a></li>
+					<li class="pc_display_none"><a href="/aboutus/">ご利用ガイド</a></li>
+					<li class="pc_display_none"><a href="/aboutus/whatnew">運営からお知らせ</a></li>
+					<li class="pc_display_none"><a href="https://release.co.jp/contact/">お問い合わせ</a></li>
                 </ul>
               </nav>
             </div>
@@ -109,7 +160,7 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
     <div class="side_banner">
       <ul class="sp_side_header_btn row" style="padding-left: 0px;">
         <li class="col-xs-6 col-sm-6"><a href="/cart" class="side_cart_btn">カートを見る</a></li>
-        <li class="col-xs-6 col-sm-6"><a href="/mypage/item" class="side_exhibit_btn">商品を出品する</a></li>
+        <li class="col-xs-6 col-sm-6"><a href="/mypage/item" class="side_exhibit_btn">出品する</a></li>
 
 
       </ul>
@@ -128,25 +179,54 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
     <div id="g">
       <!-- 20170730 mod -->
       <div class="row">
+		<?php if($_SERVER['REQUEST_URI'] == "/"){?>
+		<!--<div class="hide_500 sliderbox" style="margin-top:20px;">-->
+		  <div class="sliderbox" style="margin-top:20px;">
+		<?php echo $HTML_TOP_BANNER ?>
+			  <div class="topbanner">
+<a href="https://shop.release.sc/lp-commerce/" target="_blank" style="float: left"><img src="/kimonon/img/image001.png" alt="RELEASEのフリーマーケットサイトRELEASE COMMERCE 出品者大募集"></a>
+<a href="https://www.dreamnews.jp/press/0000223074/" target="_blank"><img src="/kimonon/img/image002.png" alt="RELEASEのフリーマーケットサイトRELEASE COMMERCE 出品者大募集"></a>
+<a href="https://www.dreamnews.jp/press/0000223608/" target="_blank" style="float: right"><img src="/kimonon/img/image003.png" alt="実りの秋！無料出品キャンペーン"></a>
+		</div>	  
+		</div>
+		<?php } ?>
         <!-- コンテンツメイン -->
-        <div id="main" class="col-xs-12 col-sm-12 col-md-9 col-md-push-3 mt20 ">
+		  <!--<div id="main" class="col-xs-12 col-sm-12 col-md-9 col-md-push-3 mt20 ">-->
+        <div id="main" class="">
+
           <?php echo $this->fetch('content'); ?>
         </div>
+<div class="syuppin"><p class=""><a href="/mypage/item" class="">出品する</a></p></div>
+        <!-- 左メニュー <div id="side" class="col-xs-12 col-sm-12 col-md-3 col-md-pull-9 mt40">-->
+<!--            <div class="cart">
+              <p class=""><a href="/cart" class="">カートを見る</a></p>
+            </div>-->
+		  
+		</div><!--row-->
+	  </div><!--g-->
+		
+		<div id="s">
+		<div class="row">
 
-        <!-- 左メニュー -->
-        <div id="side" class="col-xs-12 col-sm-12 col-md-3 col-md-pull-9 mt40">
+        <div id="side" >
           <div class="side_header spnone">
+<!--
             <div class="side_banner">
-              <p><!--<a href="#"><img src="/img/cm_01.png" alt="フリマ" class="img-responsive"></a>--><a href="#"><img src="/kimonon/img/u6zqsZY.png" alt="左カラムバナー" class="img-responsive" width="250px"></a></p>
+              <p><a href="#"><img src="/kimonon/img/u6zqsZY.png" alt="左カラムバナー" class="img-responsive" width="250px"></a></p>
               <p class="centered"><a href="/cart" class="side_cart_btn">カートを見る</a></p>
-              <p class="centered"><a href="/mypage/item" class="side_exhibit_btn">商品を出品する</a></p>
             </div>
+			-->
+			  <!--
             <form class="mb10" action="/item/search/" enctype="text/plain" method="get">
               <div class="search_box">
                 <input type="search" name="keyword" placeholder="検索する">
                 <button class="search_btn"><span class="search_mark"></span></button>
               </div>
             </form>
+-->
+		<?php //if($this->action != "index"){ 
+		if($_SERVER['REQUEST_URI'] != "/"){ ?>
+		<!--<div class="hide_500 sliderbox" style="margin-top:20px;">-->
           </div>
           <a href="/item/category/"><h3 class="f20 mover">カテゴリー</h3></a>
           <div class="genre clearfix">
@@ -156,36 +236,32 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
               <?php endforeach; ?>
             </ul>
             <div class="clear"></div>
-            <ul class="guide">
-              <li class="text-right"><a href="/item/category/">すべてのカテゴリー</a></li>
+            <ul class="guide more">
+              <li><a href="/item/category/">すべてのカテゴリー</a></li>
             </ul>
           </div>
           <a href="/item/tag/"><h3 class="f20 mover">現在の人気キーワード</h3></a>
           <?php if (!empty($arrTagList)) : ?>
-            <div class="genre clearfix popular_tags">
-              <ul class="box_l">
+            <div class="genre clearfix">
+              <ul class="box_l popular_tags">
               <?php for($i = 0; $i < count($arrTagList); $i++): ?>
-                <li><a href="/item/tag/<?php echo h($arrTagList[$i]) ?>"><?php echo h(mb_strimwidth($arrTagList[$i],0,14,'...')) ?></a></li>
+                <li><a href="/item/tag/<?php echo h($arrTagList[$i]) ?>">#<?php echo h(mb_strimwidth($arrTagList[$i],0,14,'...')) ?></a></li>
               <?php endfor; ?>
               </ul>
+            <div class="clear"></div>
+            <ul class="guide more">
+              <li><a  href="/item/tag/">すべてのキーワード</a></li>
+            </ul>
             </div>
           <?php endif; ?>
 
-          <h3 class="f20">ご利用案内</h3>
-          <ul class="guide clearfix">
-            <li><a href="/aboutus/guide/buy">購入者ガイド</a></li>
-            <li><a href="/aboutus/guide/sale">出品者ガイド</a></li>
-            <li><a href="/aboutus/faq">よくある質問</a></li>
-            <li><a href="/aboutus/whatnew">運営からお知らせ</a></li>
-          </ul>
-          <h3 class="f20">お問い合わせ</h3>
-          <ul class="guide">
-            <li><a href="/aboutus/law">特定商法取引に基づく表記</a></li>
-            <li><a href="/aboutus/privacy">個人情報保護について</a></li>
-            <li><a href="/aboutus/">運営会社</a></li>
-            <li><a href="/aboutus/contact">お問い合わせ</a></li>
-          </ul>
-        </div>
+
+			</div>
+		<?php } ?>
+			  
+			  
+			  
+
         <!-- 左メニュー -->
       </div>
       <!-- /row -->
@@ -194,11 +270,46 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
   </div>
   <!-- コンテンツここまで -->
 
+<div class="footermenu">
+<div class="footermenuguide">
+	
+
+<div class="footermenu1">
+<a href="/" class="footer-logo"><img src="/kimonon/img/mallento_furimo_LP1.png" alt="RELEASE COMMERCE" width="230"></a>
+<a href="https://release.sc/" class="footer-logo"><img src="/kimonon/img/snslogo.png" alt="RELEASE COMMERCE" width="230"></a>
+</ul>
+</div>
+	
+<div class="footermenu1">
+          <h3 class="f20">ご利用案内</h3>
+          <ul class="guide clearfix">
+            <li><a href="/lp-commerce/">RELEASEコマースについて</a></li>
+			<li><a href="/aboutus/guide/buy">購入者ガイド</a></li>
+            <li><a href="/aboutus/guide/sale">出品者ガイド</a></li>
+            <li><a href="/aboutus/faq">よくある質問</a></li>
+            <li><a href="/aboutus/whatnew">運営からお知らせ</a></li>
+          </ul>
+</div>
+<div class="footermenu1">
+          <h3 class="f20">お問い合わせ</h3>
+          <ul class="guide">
+            <li><a href="/aboutus/law">特定商法取引に基づく表記</a></li>
+            <li><a href="/commerce-terms">利用規約</a></li>
+			<li><a href="/aboutus/privacy">個人情報保護について</a></li>
+            <?php /*<li><a href="/aboutus/">運営会社</a></li>*/ ?>
+            <li><a href="/aboutus/contact">お問い合わせ</a></li>
+          </ul>
+</div>
+	
+</div>
+</div>
   <!-- フッター-->
   <footer>
     <!-- フッタ -->
     <div id="c">
-      <div class="c_naka pt10"> <small>Copyright &copy; 2018 Mallento All Rights Reserved.</small> </div>
+		
+      <div>
+		  <small>Copyright &copy; <?php echo date("Y"); ?> RELEASE COMMERCE All Rights Reserved.</small> </div>
     </div>
   </footer>
 
@@ -213,6 +324,26 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
   <script type="text/javascript" src="/kimonon/js/accordion_menu.js"></script>
   <script type="text/javascript" src="/kimonon/js/jquery.js"></script>
   <script type="text/javascript" src="/kimonon/js/lightbox.js"></script>
+  <?php if($this->action == "index"){?>
+<link rel="stylesheet" type="text/css" href="/kimonon/js/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="/kimonon/js/slick/slick-theme.css"/>
+<script src="/kimonon/js/slick/slick.js"></script>
+<script type="text/javascript">
+    $(document).on('ready', function() {
+      $(".slider").slick({
+		autoplay:true,
+        dots: true,
+        vertical: false,
+        /*centerMode: true,*/
+        slidesToShow: 1,
+        slidesToScroll: 1,
+		adaptiveHeight:true,
+		  
+      });
+    });
+</script>
+  <?php } ?>
+	
   <?php echo $this->fetch('script'); ?>
   <script type="text/javascript">
     <?php echo $this->fetch('script_area'); ?>
@@ -224,6 +355,9 @@ $dspCategories = array_slice(Configure::read('arrCategory'), 0, 10);
       });
     });
   </script>
+  <script type="text/javascript" language="javascript">
+    var vc_pid = "884989687";
+</script><script type="text/javascript" src="//aml.valuecommerce.com/vcdal.js" async></script>
   <?php echo $this->element('sql_dump');?>
 </body>
 </html>

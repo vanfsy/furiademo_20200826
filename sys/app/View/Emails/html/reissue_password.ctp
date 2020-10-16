@@ -8,5 +8,5 @@ https://<?php echo Configure::read('info.domain'); ?>/mypage/login<br><br>
 アカウントの本登録を完了させて下さい。<br><br>
 <?php echo $tmpLink; ?><br><br>
 ▼ お問い合わせ先<br>
-<?php echo Configure::read('info.adminMail'); ?><br>
+Mail：shop@release.co.jp <br>
 ---------------------------------------------------------------------

@@ -54,13 +54,13 @@ $this->assign('script_area', $code_area);
       <div class="waku01">販売者情報</div>
       <div class="saller_prof mt20 ml30 spml_0 f14">
           <p>
-              <?php echo h($arrMemberInfo['Member']['company']) ?> <?php echo h($arrMemberInfo['Member']['nickname']) ?>
+              <!--<?php echo h($arrMemberInfo['Member']['company']) ?>--> <?php echo h($arrMemberInfo['Member']['nickname']) ?>
        <!-- <?php if(!empty($arrMemberInfo['Member']['company'])): ?>
         <?php echo h($arrMemberInfo['Member']['company']) ?> <?php echo h($arrMemberInfo['Member']['nickname']) ?>
         <?php else: ?>
         <?php echo h($arrMemberInfo['Member']['nickname']) ?>
         <?php endif; ?> -->
-        <?php if($arrMemberInfo['Member']['user_rank'] == 'official'): ?><img class="ml10" src="/img/seller_chk.png" alt="" /><?php endif; ?>
+        <!<?php if($arrMemberInfo['Member']['user_rank'] == 'official'): ?><img class="ml10" src="/img/seller_chk.png" alt="" /><?php endif; ?>
         </p>
         <p class="mt30 auto_linker"> <?= nl2br(h($arrMemberInfo['Member']['comment'])) ?></p>
       </div>
@@ -84,7 +84,7 @@ $this->assign('script_area', $code_area);
   <section class="item">
     <div class="clearfix">
       <p class="alignleft">全商品数：<span class="strong"><?= $arrItemCount ?></span>件</p>
-      <p class="alignright"><a href="/item/member/<?= $arrMemberInfo['Member']['id'] ?>">全て見る</a></p>
+      
     </div>
     <div class="row row-eq-height">
 <?php foreach($arrItemList as $i => $row): ?>
@@ -92,6 +92,7 @@ $this->assign('script_area', $code_area);
 <?php if($i%4 == 3) echo '</div><div class="row">' ?>
 <?php endforeach; ?>
     </div>
+	  <p class="alignright mr05 f11 fw_normal moreItem"><a href="/item/member/<?= $arrMemberInfo['Member']['id'] ?>">全て見る</a></p>
   </section>
 <?php else: ?>
   <h2 class="f25 mb20">この出品者の商品一覧</h2>

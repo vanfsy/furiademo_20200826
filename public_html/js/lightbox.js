@@ -1,5 +1,6 @@
 // JavaScript Document
 jQuery(function($){
+/**
     $(".pd_main_img").magnificPopup({ 
         type: 'image'
     });
@@ -10,4 +11,15 @@ jQuery(function($){
 		enabled:true
 	  }
 	});
+
+*/
+	$('#detail_main_img').magnificPopup({
+	  delegate: 'a', 
+	  type: 'image',
+	  gallery: { 
+		enabled:true
+	  }
+	});
+
 });
+

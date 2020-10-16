@@ -12,59 +12,67 @@ EOF;
 $this->assign('script_area', $code_area);
 ?>
 
-<div class="hide_500" style="margin-top:20px;">
-  <?php echo $HTML_TOP_BANNER ?>
-</div>
-<section>
+
+<section class="newitem">
+<!--
   <h2 class="f25 mb20">
     新着商品
     <?php if(!empty($arrNewDatas)): ?>
-      <span class="alignright mr05 f11 fw_normal"><a href="/item/newData_rank">もっと見る</a></span>
+      
     <?php endif ?>
   </h2>
+-->
   <div class="row item sp-listing">
     <?php foreach($arrNewDatas as $row): ?>
-    <div class="col-xs-4 col-sm-4 col-md-3">
+    <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
       <?= $this->element('item', ['row' => $row]) ?>
     </div>
     <?php endforeach; ?>
   </div>
+	<span class="alignright mr05 f11 fw_normal moreItem"><a href="/item/newData_rank">もっと見る</a></span>
 </section>
-<section>
+<!--
+<section class="pickupitem">
   <h2 class="f25 mb20">
     PICK UP !!
     <?php if(!empty($arrPickUp)): ?>
-      <span class="alignright mr05 f11 fw_normal"><a href="/item/pickup_rank">もっと見る</a></span>
+      
     <?php endif ?>
   </h2>
   <div class="row item sp-listing">
     <?php foreach($arrPickUp as $row): ?>
-    <div class="col-xs-4 col-sm-4 col-md-3">
+    <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
       <?= $this->element('item', ['row' => $row]) ?>
     </div>
     <?php endforeach; ?>
   </div>
+	<span class="alignright mr05 f11 fw_normal moreItem"><a href="/item/pickup_rank">もっと見る</a></span>
 </section>
-<section>
+-->
+<!--
+<section class="rankingitem">
   <h2 class="f25 mb20">
     商品ランキング
     <?php if(!empty($arrSaleRank)): ?>
-      <span class="alignright mr05 f11 fw_normal"><a href="/item/sale_rank">もっと見る</a></span>
+      
     <?php endif ?>
   </h2>
   <div class="row item sp-listing">
     <?php foreach($arrSaleRank as $row): ?>
-    <div class="col-xs-4 col-sm-4 col-md-3">
+    <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
       <?= $this->element('item', ['row' => $row]) ?>
     </div>
     <?php endforeach; ?>
   </div>
+	<span class="alignright mr05 f11 fw_normal moreItem"><a href="/item/sale_rank">もっと見る</a></span>
 </section>
-<section>
+-->
+<!--
+<section class="userranking" style="display: none;">
   <h2 class="f25 mb20">
     出品者ランキング
     <?php if(!empty($arrSellerRank)): ?>
-      <span class="alignright mr05 f11 fw_normal"><a href="/item/seller_rank">もっと見る</a></span>
+      
     <?php endif ?>
   </h2>
   <div class="row item sp-listing">
@@ -73,7 +81,7 @@ $this->assign('script_area', $code_area);
         $img_path = $this->Image->upload_resize('members', $row['Member']['id'], $row['Member']['image_file_name'], 'list_s');
         $img_src = str_replace(WWW_ROOT,'/',$img_path);
       ?>
-      <div class="col-xs-4 col-sm-4 col-md-3">
+      <div class="col-xs-4 col-sm-4 col-md-3 userBox">
         <dl>
           <dt><a href="/mypage/sellerinfo/<?php echo $row['Member']['id'] ?>"><img src="<?php echo $img_src ?>" alt="<?php echo h($row['Member']['company']) ?>" onerror="onImgErr(this)"></a></dt>
           <dd class="mt05 title_wrapper">
@@ -89,4 +97,6 @@ $this->assign('script_area', $code_area);
       </div>
     <?php endforeach; ?>
   </div>
+	<span class="alignright mr05 f11 fw_normal moreItem"><a href="/item/seller_rank">もっと見る</a></span>
 </section>
+-->

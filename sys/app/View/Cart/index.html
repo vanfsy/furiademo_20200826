@@ -27,7 +27,7 @@ $this->assign('script_area', $code_area);
       </caption>
       <tr class="bg_lightgray">
         <th>商品番号</th>
-        <th class="width30">タイトル名</th>
+        <th class="width30">商品名</th>
         <th>販売額</th>
         <th>削除</th>
         <th>小計</th>
@@ -52,15 +52,18 @@ $this->assign('script_area', $code_area);
         <td><?php echo number_format($arrCart['sumTotal']) ?></td>
       </tr>
     </table>
-    <p class="textcenter pt20">
+	  
+	    <p class="ml30 mb30" style="font-size: 16px;line-height: 32px;margin: 0!important;padding: 10px;box-sizing: inherit;"><br>※RELEASEコマースでは、安全・安心な取引を実現するため、商品を購入する前に、事前にポイントを購入いただき、ポイントで決済を行う第三者を介した決済方法を導入しております。</p>
+	  
+    <p class="textcenter pt20 pointporm1">
 <?php if(!empty($arrCart['list'])): ?>
 
   <?php if(!empty($loginname)): ?>
-        <a href="/cart/buy_point"><input type="button" value="ポイント購入する" class="mybtn-bl mybtn-bl-md mybtn-second"></a>
-        <a href="/cart/clearance"><input type="button" value="ポイント決済する" class="mybtn-bl mybtn-bl-md"></a>
+        <a href="/cart/buy_point"><input type="button" value="ポイント購入する" class="mybtn-bl mybtn-bl-md mybtn-second mb20"></a>
+        <a href="/cart/clearance"><input type="button" value="ポイント決済する" class="mybtn-bl mybtn-bl-md mb20"></a>
   <?php else: ?>
-        <a href="/cart/login/buy_point"><input type="button" value="ポイント購入する" class="mybtn-bl mybtn-bl-md mybtn-second"></a>
-        <a href="/cart/login/clearance"><input type="button" value="ポイント決済する" class="mybtn-bl mybtn-bl-md"></a>
+        <a href="/cart/login/buy_point"><input type="button" value="ポイント購入する" class="mybtn-bl mybtn-bl-md mybtn-second mb20"></a>
+        <a href="/cart/login/clearance"><input type="button" value="ポイント決済する" class="mybtn-bl mybtn-bl-md mb20"></a>
   <?php endif; ?>
 
 <?php else: ?>
@@ -75,4 +78,5 @@ $this->assign('script_area', $code_area);
 <?php endif; ?>
     </p>
   </form>
+
 </section>

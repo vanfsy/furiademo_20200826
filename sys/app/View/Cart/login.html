@@ -6,7 +6,8 @@
 <?php echo $this->Form->create('Member', array('url' => '/cart/login/'.$mode,'class' => 'form-horizontal')) ?>
 
           <div class="form-group">
-            <label class="col-sm-3 control-label">ユーザID<span class="red">*</span></label>
+            <!--<label class="col-sm-3 control-label">ユーザID<span class="red">*</span></label>-->
+			  <label class="col-sm-3 control-label">メールアドレス<span class="red">*</span></label>
             <div class="col-sm-6">
 <?php echo $this->Form->input('user_id',array('label'=>false,'type' => 'text', 'class'=>'form-control', 'style'=>'width:100%;','placeholder' => 'yourmail@mail.com')) ?>
             </div>

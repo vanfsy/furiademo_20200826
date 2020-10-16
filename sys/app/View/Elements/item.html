@@ -5,24 +5,29 @@
         $img_url = "/img/front_s.png";
       }
       $item_url = "/item/detail/".$row['Item']['id'];
-      $title = mb_strimwidth($row['Item']['title'], 0, 40, "…");
-      $name_base = $row['Member']['company'].' '.$row['Member']['nickname'];
+      $title = mb_strimwidth($row['Item']['title'], 0, 50, "…");
+      /*$name_base = $row['Member']['company'].' '.$row['Member']['nickname'];*/
+	  $name_base = $row['Member']['nickname'];
       $name = mb_strimwidth($name_base, 0, 50, "…");
       $price = number_format($row['Item']['price']);
+      $quantity = number_format($row['Item']['quantity']);
+	  $selling = number_format($row['Item']['selling']);
       $user_url = "/mypage/sellerinfo/".$row['Item']['member_id'];
 ?>
 
 <dl class="">
   <dt>
+	
     <a href="<?= $item_url ?>">
+	<?php if(!$quantity > 0  && !$selling == 0): ?><div class="soldout"><img src="/kimonon/img/sold.png" alt=""></div><?php endif; ?>
       <img src="<?= $img_url ?>" alt="<?= h($row['Item']['title']) ?>" onerror="onImgErr(this)">
       <p class="price-p"><?= $price ?>円</p>
     </a>
   </dt>
   <dd class="mt05 title_wrapper">
     <p class="title textleft"><a href="<?= $item_url ?>"><?= h($title) ?></a></p>
-    <p class="textright"><?= $price ?>円</p>
-    <p class="name textleft">
+    <p class="textright itempriceview"><?= $price ?>円</p>
+    <p class="name textleft" style="display: none;">
       <a class="company_a text-ellipsis" href="<?= $user_url ?>">
         <span class="glyphicon glyphicon-user" aria-hidden="true"> </span> <?= h($name) ?>
       </a>

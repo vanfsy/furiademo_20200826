@@ -13,7 +13,7 @@ $arrGender = Configure::read('arrGender');
 $arrMailMagFlg = Configure::read('arrMailMagFlg');
 
 if(isset($arrData['Member']['birthday'])){
-$minYear = date('Y')-60;
+$minYear = date('Y')-90;
 $maxYear = date('Y')-10;
 $defYear = @date('Y',strtotime($arrData['Member']['birthday']));
 $defMonth = @date('m',strtotime($arrData['Member']['birthday']));
@@ -109,7 +109,7 @@ $this->assign('code_area', $code_area);
         </td>
       </tr>
       <tr>
-        <th class="width20">会社名※</th>
+        <th class="width20">会社名</th>
         <td>
           <?php echo $this->Form->input('company',
           array('label' => false,

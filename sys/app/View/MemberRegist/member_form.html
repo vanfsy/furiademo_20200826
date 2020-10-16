@@ -12,7 +12,7 @@ $this->Html->meta('description', $meta_description, array('inline' => false));
 $arrGender = Configure::read('arrGender');
 $arrMailMagFlg = Configure::read('arrMailMagFlg');
 
-$minYear = date('Y')-60;
+$minYear = date('Y')-90;
 $maxYear = date('Y')-10;
 $defYear = date('Y')-20;
 $birthdayOption = array(
@@ -130,7 +130,8 @@ $this->assign('code_area', $code_area);
         'type' => 'text',
         'value' => $arrData['Member']['phone'],
         'placeholder' => '080-0000-0000',
-        )) ?>
+        )) ?><br>
+*ハイフンも入力してください。
       </td>
     </tr>
     <tr>
@@ -249,6 +250,10 @@ $this->assign('code_area', $code_area);
   </table>
   <input name="data[Member][mailmag_flg]" type="hidden" value="0">
 
+<p class="ml30 mb30"><br>※当サイトからのメールは「noreply@release.co.jp」から届きます。<br>
+「noreply@release.co.jp」からのメールを受信できる様、ドメイン設定を解除していただくか、または弊社ドメイン『release.co.jp』を受信リストに加えていただきますよう、会員登録前にあらかじめご自身のパソコンやスマートフォンのメール設定のご確認をお願いいたします。<br>
+<font color="#FF0000">※迷惑メール防止機能により、新規登録完了メールが迷惑メールと判断されててしまう場合がございます。<br>
+迷惑メールフォルダやゴミ箱に自動的に振り分けられている可能性がありますので、一度ご確認頂きますようお願い致します。</font></p>
 
   <p class="textcenter pt20">
     <input type="submit" class="mybtn-bl mybtn-bl-md" value="確認ページへ" />

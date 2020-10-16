@@ -42,7 +42,7 @@ $this->assign('script_area', $code_area);
         <tr>
           <th>&nbsp;</th>
           <td>
-            <p class="item-p01"><a href="/message/trashlist">ゴミ箱</a></p>
+            <p class="item-p01"><a href="/message/trashlist">ゴミ箱のメール一覧</a></p>
           </td>
         </tr>
       </tbody>
@@ -50,6 +50,9 @@ $this->assign('script_area', $code_area);
 
     <div class="black waku01 mt50 mb20">送信メール一覧</div>
     <table class="table04">
+		
+		<?php if($isMobile): ?>
+		<?php else: ?>
       <thead>
         <tr>
             <th class="width200p">宛先</th>
@@ -58,9 +61,34 @@ $this->assign('script_area', $code_area);
             <th>日付</th>
         </tr>
       </thead>
+		<?php endif; ?>
+		
       <tbody>
 <?php if(!empty($arrMessage['list'])): ?>
 <?php foreach($arrMessage['list'] as $row): ?>
+		  
+		<?php if($isMobile): ?>
+		  
+        <tr>
+          <td class="textleft">
+			  <p>宛先:<?php echo h($row['ToMember']['name']) ?> / 日付:<?php echo date('Y/m/d', strtotime($row['Message']['created'])) ?></p>
+			  <p class="textleft" style="margin: 0px;">件名:<a class="blue" href="/message/message_detail/<?php echo h($row['Message']['id']) ?>"><?php echo h($row['Message']['subject']) ?></a></p>
+			  <p class="textleft" style="margin: 0px;">商品:<a class="blue" href="/item/detail/<?php echo h($row['FromItem']['id']) ?>"><?php echo h($row['FromItem']['title']) ?></a></p>
+          </td>
+        </tr>
+
+		  
+		<?php else: ?>
+        <tr>
+          <td class="textleft"><?php echo h($row['ToMember']['name']) ?>
+          </td>
+          <td><p class="blue textleft" style="margin: 0px;"><a href="/message/message_detail/<?php echo h($row['Message']['id']) ?>"><?php echo h($row['Message']['subject']) ?></a></p></td>
+          <td><p class="blue textleft" style="margin: 0px;"><a href="/item/detail/<?php echo h($row['FromItem']['id']) ?>"><?php echo h($row['FromItem']['title']) ?></a></p></td>
+          <td class="f11 mt05"><?php echo date('Y/m/d', strtotime($row['Message']['created'])) ?></td>
+        </tr>
+<?php endif; ?>
+		  
+<?php /*
         <tr>
             <td class="textleft"><?php echo h($row['ToMember']['nickname']) ?>
             </td>
@@ -68,6 +96,9 @@ $this->assign('script_area', $code_area);
             <td><p class="blue textleft" style="margin: 0px;"><a href="/item/detail/<?php echo h($row['FromItem']['id']) ?>"><?php echo h($row['FromItem']['title']) ?></a></p></td>
             <td class="f11 mt05"><?php echo date('Y/m/d', strtotime($row['Message']['created'])) ?></td>
         </tr>
+*/ ?>		  
+		  
+
 <?php endforeach; ?>
 <?php else: ?>
       <tr>

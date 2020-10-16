@@ -69,7 +69,7 @@
     closeOnConfirm: true,
     closeOnCancel: true,
     closeOnEscape: true,
-    closeOnOutsideClick: true,
+    closeOnOutsideClick: false,
     modifier: ''
   }, global.REMODAL_GLOBALS && global.REMODAL_GLOBALS.DEFAULTS);
 

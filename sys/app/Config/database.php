@@ -69,7 +69,7 @@ class DATABASE_CONFIG {
         'password' => 'solomon2020',
         'database' => 'release_shop_sc',
         'prefix' => '',
-        'encoding' => 'utf8',
+        'encoding' => 'utf8mb4',
     );
 
 }

@@ -73,6 +73,24 @@ $this->assign('code_area', $code_area);
 <?php if($isMobile): ?>
 <?php if(!empty($arrData['list'])): ?>
 <?php foreach($arrData['list'] as $row): ?>
+<table class="table07 mt20">
+      <tbody>
+        <tr>
+          <th class="width120p td_gray">購入日</th>
+          <td><?php echo date('Y年m月d日 H時i分', strtotime($row['OrderPoint']['created'])); ?></td>
+        </tr>
+        <tr>
+          <td class="td_gray">購入ポイント</td>
+          <td><?php echo $row['OrderPoint']['point']; ?>P</td>
+        </tr>
+        <tr>
+          <td class="td_gray">決済方法</td>
+          <td><?php echo Configure::read('arrPaymentMethod.'.$row['OrderPoint']['payment']); ?></td>
+        </tr>
+
+      </tbody>
+</table>
+<!--
     <table class="table07 mt20">
       <tbody>
         <tr>
@@ -80,7 +98,7 @@ $this->assign('code_area', $code_area);
           <td><?php echo sprintf('%05d', $row['Item']['id']) ?></td>
         </tr>
         <tr>
-          <td class="td_gray">タイトル名</td>
+          <td class="td_gray">商品名</td>
           <td><a href="/item/detail/<?php echo $row['Item']['id'] ?>"><?php echo h($row['Item']['title']) ?></a></td>
         </tr>
         <tr>
@@ -88,11 +106,12 @@ $this->assign('code_area', $code_area);
           <td><?php echo number_format($row['Item']['price']) ?></td>
         </tr>
         <tr>
-          <td class="td_gray">ステータス</td>
+          <td class="td_gray">https://shop.release.sc/mypage/purchased</td>
           <td><a href="/item/download/<?php echo $row['Item']['id'] ?>">ダウンロード</a></td>
         </tr>
       </tbody>
     </table>
+-->
 <?php endforeach; ?>
 
     <div class="textcenter"><?php echo $this->Paging->list_navi($arrData,$url); ?></div>

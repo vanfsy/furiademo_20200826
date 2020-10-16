@@ -1,7 +1,20 @@
 <?php
+if($_SERVER['REQUEST_URI'] == "/"){
+$meta_title = Configure::read('page.main');
+$meta_keywords = Configure::read('page.main');
+$meta_description = Configure::read('page.main');
+}else{
+
+$meta_title = Configure::read('html.items');
+$meta_keywords = 'フリーマーケット,フリマ,食品,食材,お取り寄せ,農業,漁業,畜産業,通販';
+$meta_description = 'RELEASEコマースは、全国の農家や漁師や家庭菜園をされている方々より、丹精込めて栽培した野菜や果物・水揚げされたばかりの新鮮な魚介類などを全国のすべての消費者にお届けする「食」のオンラインマーケットです。';
+/*
 $meta_title = Configure::read('html.items');
 $meta_keywords = Configure::read('html.items');
 $meta_description = Configure::read('html.items');
+*/
+}
+
 
 $this->set('title_for_layout',$meta_title);
 $this->Html->meta('keywords', $meta_keywords, array('inline' => false));
@@ -36,7 +49,14 @@ array('id' => 'sort',
 )) ?>
 
 <section class="item">
-  <h2 class="f25 mb20"><?php echo $strH2 ?>の商品一覧</h2>
+
+		<?php if($this->action != "index"){?>
+	  <h2 class="f25 mb20">
+<?php echo $strH2 ?>の商品一覧
+	  	  </h2>
+		<?php } ?>
+	  
+
   <div class="category clearfix">
     <p class="item_num"><span class="strong"><?php echo $arrDatas['total'] ?></span>件表示</p>
 
@@ -87,19 +107,26 @@ array('id' => 'sort',
             $img_url = "/img/front_s.png";
           }
           $item_url = "/item/detail/".$row['Item']['id'];
-          $title = mb_strimwidth($row['Item']['title'], 0, 40, "…");
+          $title = mb_strimwidth($row['Item']['title'], 0, 50, "…");
           $name_base = $row['Member']['company'].' '.$row['Member']['name'];
           $name = mb_strimwidth($name_base, 0, 50, "…");
           $price = number_format($row['Item']['price']);
+		  $quantity = number_format($row['Item']['quantity']);
+	      $quantity = number_format($row['Item']['quantity']);
           $user_url = "/mypage/sellerinfo/".$row['Item']['member_id'];
         ?>
-        <div class="col-xs-4 col-sm-4 col-md-3">
-          <dl class="">
-            <dt><a href="<?= $item_url ?>"><img src="<?= $img_url ?>" alt="<?= h($row['Item']['title']) ?>" onerror="onImgErr(this)"><p class="price-p"><?= $price ?>円</p></a></dt>
+        <div class="col-xs-4 col-sm-4 col-md-3 itemBox">
+          <dl class="<?php if($quantity > 0): ?><?php else: ?>soldout<?php endif; ?>">
+            <dt>
+				<a href="<?= $item_url ?>">
+				<?php if($quantity > 0): ?><?php else: ?><div class="soldout"><img src="/kimonon/img/sold.png" alt=""></div><?php endif; ?>
+				<img src="<?= $img_url ?>" alt="<?= h($row['Item']['title']) ?>" onerror="onImgErr(this)"><p class="price-p"><?= $price ?>円</p>
+				</a>
+			</dt>
             <dd class="mt05 title_wrapper">
               <p class="title textleft"><a href="<?= $item_url ?>"><?= h($title) ?></a></p>
               <p class="textright"><?= $price ?>円</p>
-              <p class="name textleft"><a class="company_a text-ellipsis" href="<?= $user_url ?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?= h($name) ?></a></p>
+              <p class="name textleft" style="display: none;"><a class="company_a text-ellipsis" href="<?= $user_url ?>"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?= h($name) ?></a></p>
             </dd>
           </dl>
         </div>
@@ -113,5 +140,18 @@ array('id' => 'sort',
   <?php if(!empty($arrDatas['list'])): ?>
     <div class="textcenter"><?php echo $this->Paging->list_navi($arrDatas, $url); ?></div>
   <?php endif; ?>
+<div class="addbox">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- コマース一覧ページ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5709399179121964"
+     data-ad-slot="2051925064"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
 </section>
 <?php echo $this->Form->end(); ?>

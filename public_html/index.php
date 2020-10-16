@@ -38,7 +38,7 @@ if (!defined('DS')) {
  */
 if (!defined('ROOT')) {
 //    define('ROOT', dirname(dirname(dirname(__FILE__))).'/sys');
-    define('ROOT', dirname(dirname(__FILE__)) . DS . 'sys_furima-demo');
+    define('ROOT', dirname(dirname(__FILE__)) . DS . 'sys');
 }
 
 /**

@@ -51,7 +51,7 @@ $this->assign('code_area', $code_area);
         <tr>
           <th>注文番号</th>
           <th>商品番号</th>
-          <th>タイトル名</th>
+          <th>商品名</th>
           <th>販売額</th>
           <th>ステータス</th>
         </tr>
@@ -65,7 +65,7 @@ $this->assign('code_area', $code_area);
           <td class="textright"><?php echo number_format($row['Item']['price']) ?></td>
 
           <?php if ($row['OrderItem']['status'] == OrderItem::STATUS_SHIPPING) : ?>
-          <td><a href="/mypage/delivered/<?php echo $row['OrderItem']['id'] ?>">受け取りました</a></td>
+          <td><a href="/mypage/delivered/<?php echo $row['OrderItem']['id'] ?>" style="color: #FF0000">受け取りました</a></td>
           <?php else : ?>
           <td><?php echo OrderItem::statusText($row['OrderItem']['status']) ?></td>
           <?php endif; ?>
@@ -102,7 +102,7 @@ $this->assign('code_area', $code_area);
           <td><?php echo sprintf('%05d', $row['Item']['id']) ?></td>
         </tr>
         <tr>
-          <td class="td_gray">タイトル名</td>
+          <td class="td_gray">商品名</td>
           <td><a href="/item/detail/<?php echo $row['Item']['id'] ?>"><?php echo h($row['Item']['title']) ?></a></td>
         </tr>
         <tr>
@@ -110,9 +110,10 @@ $this->assign('code_area', $code_area);
           <td><?php echo number_format($row['Item']['price']) ?></td>
         </tr>
         <tr>
-          <td class="td_gray">ステータス</td>
+          <!--<td class="td_gray">ステータス</td>-->
+			<td class="td_gray">手続き状況</td>
           <?php if ($row['OrderItem']['status'] == OrderItem::STATUS_SHIPPING) : ?>
-          <td><a href="/mypage/delivered/<?php echo $row['OrderItem']['id'] ?>">受け取りました</a></td>
+          <td><a href="/mypage/delivered/<?php echo $row['OrderItem']['id'] ?>" style="color: #FF0000">受け取りました</a></td>
           <?php else : ?>
           <td><?php echo OrderItem::statusText($row['OrderItem']['status']) ?></td>
           <?php endif; ?>

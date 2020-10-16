@@ -45,7 +45,7 @@ $this->assign('script_area', $code_area);
       </caption>
       <tr class="bg_lightgray">
         <th>商品番号</th>
-        <th class="width30">タイトル名</th>
+        <th class="width30">商品名</th>
         <th>販売額</th>
         <th>削除</th>
         <th>小計</th>
@@ -80,7 +80,7 @@ $this->assign('script_area', $code_area);
           <td><?php echo sprintf('%06d', $row['item_id']) ?></td>
         </tr>
         <tr>
-          <td class="td_gray">タイトル名</td>
+          <td class="td_gray">商品名</td>
           <td><a href="/item/detail/<?php echo sprintf('%06d', $row['item_id']) ?>"><?php echo h($row['item_name']) ?></a></td>
         </tr>
         <tr>

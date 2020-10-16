@@ -21,10 +21,21 @@ $this->assign('script_area', $code_area);
   <?php if(!empty($arrDatas)): ?>
     <div class="detail_tag_list width100 mt30 clearfix">
       <?php foreach($arrDatas as $tag): ?>
-        <a href="/item/tag/<?php echo h($tag) ?>"><?php echo h($tag) ?><p></p></a>
+        <a href="/item/tag/<?php echo h($tag) ?>" class="keywordtag">#<?php echo h($tag) ?></a>
       <?php endforeach; ?>
     </div>
   <?php else: ?>
     <div class="ml15">該当する情報がありません。</div>
   <?php endif; ?>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- コマース一覧ページ -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5709399179121964"
+     data-ad-slot="2051925064"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 </section>
